@@ -2,10 +2,13 @@
 
 import type { ReactNode } from 'react';
 import { ActivityFolder } from '@/components/event/ActivityFolder';
+import { ArquivoWindow } from '@/components/event/ArquivoWindow';
 import { InscricaoWindow } from '@/components/event/InscricaoWindow';
+import { LixeiraWindow } from '@/components/event/LixeiraWindow';
 import { Schedule } from '@/components/event/Schedule';
 import { SpeakersWizard } from '@/components/event/SpeakersWizard';
 import { TalkCard } from '@/components/event/TalkCard';
+import { getArquivoLixeira } from '@/data/lixeira';
 import { getPalestra, isPalestraId, listarMinicursos, listarPalestras } from '@/lib/event';
 import { speakerSlides } from '@/lib/speakers';
 
@@ -73,6 +76,27 @@ export function appFor(pathname: string, hash: string): OsApp | null {
       render: () => (
         <SpeakersWizard key={inicio} slides={speakerSlides()} inicio={inicio} syncHash={false} />
       ),
+    };
+  }
+  if (path === '/lixeira') {
+    return {
+      key: 'lixeira',
+      task: 'Lixeira',
+      icon: '/icons/lixeira.svg',
+      width: 820,
+      render: () => <LixeiraWindow />,
+    };
+  }
+  const lixo = path.match(/^\/lixeira\/([^/]+)$/);
+  if (lixo?.[1]) {
+    const arquivo = getArquivoLixeira(lixo[1]);
+    if (!arquivo) return null;
+    return {
+      key: `lixeira:${arquivo.id}`,
+      task: arquivo.nome,
+      icon: '/icons/documento.svg',
+      width: 560,
+      render: () => <ArquivoWindow arquivo={arquivo} />,
     };
   }
   const m = path.match(/^\/(palestras|minicursos)\/([^/]+)$/);

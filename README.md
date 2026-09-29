@@ -23,7 +23,7 @@ palestras, os minicursos e quem vai falar, e leva o aluno para a inscrição de 
 
 A ideia: o site é um **desktop do Windows 98 com cara de internet de 1998**. Fundo verde-azulado,
 janelas cinza em relevo, ícones de pixel, barra de tarefas, menu Iniciar e os enfeites da web
-antiga (marquee, selos 88×31, contador de visitas).
+antiga, como o marquee.
 
 ## O que tem
 
@@ -40,6 +40,8 @@ antiga (marquee, selos 88×31, contador de visitas).
   em um arquivo só.
 - **Tudo estático.** As páginas são geradas no build, com metadata e imagem de compartilhamento
   próprias, e cada atividade tem sua URL (`/palestras/erasmus`, `/minicursos/aws`...).
+- **Lixeira no desktop**, com os arquivos que todo aluno de Computação já apagou. Não tente
+  esvaziar.
 - **404 em tela azul**, claro.
 
 ## Rodando
@@ -93,6 +95,7 @@ Tudo em `src/data/`, e o site inteiro acompanha:
 | `palestrantes.ts` | Nome, mini bio e foto (`public/palestrantes/<id>.jpg`, retrato 4:5; sem foto, iniciais) |
 | `types.ts`        | Tipos e a lista `PALESTRA_IDS`                                                          |
 | `logo-ascii.ts`   | A logo em ASCII do prompt da hero                                                       |
+| `lixeira.ts`      | Os arquivos zoados da Lixeira (cada um abre no Bloco de Notas)                          |
 
 **Atividade nova:** adicione o id em `PALESTRA_IDS`, a entrada em `palestras.ts` e o slot em
 `inscricoes.ts` (o TypeScript avisa se faltar algum). A página dela é criada sozinha no build.
@@ -106,7 +109,7 @@ src/
     os/           o "sistema": janelas pop-up, barra de tarefas, qual link abre qual janela
     win98/        Window, Button, Taskbar, StartMenu, Tabs, ListView, Terminal...
     event/        Hero (CMD), Schedule, TalkCard, SpeakersWizard, InscricaoButton...
-    web90s/       Marquee, selos 88×31, contador de visitas
+    web90s/       Marquee e enfeites da web antiga
   data/           dados do evento e links de inscrição
   hooks/          relógio, contagem regressiva, arrastar, modo PC/celular
   lib/            datas, helpers de dados, metadata, navegação

@@ -1,9 +1,6 @@
 import { Hero } from '@/components/event/Hero';
 import { InscricaoWindow } from '@/components/event/InscricaoWindow';
-import { Badge } from '@/components/web90s/Badge';
-import { NewBadge, WebHr } from '@/components/web90s/Enfeites';
 import { Marquee } from '@/components/web90s/Marquee';
-import { VisitCounter } from '@/components/web90s/VisitCounter';
 import { ButtonLink } from '@/components/win98/Button';
 import { DesktopIcon, IconGrid } from '@/components/win98/DesktopIcon';
 import { Window } from '@/components/win98/Window';
@@ -28,6 +25,8 @@ export default function Home() {
               external={n.externo}
             />
           ))}
+          {/* Todo desktop que se preze tem uma. */}
+          <DesktopIcon href="/lixeira" icon="/icons/lixeira.svg" label="Lixeira" />
         </IconGrid>
 
         <div className="site-windows">
@@ -71,28 +70,6 @@ export default function Home() {
           {/* No PC a janela abre como pop-up pelo ícone; aqui fica para o celular e para /#inscricao. */}
           <InscricaoWindow id="inscricao" inactive className="os-hide" />
         </div>
-      </div>
-
-      <div className="site-web">
-        <div className="site-row">
-          <Badge href="/" variant="brand" small="2026">
-            SETAC²
-          </Badge>
-          <Badge href="/programacao" variant="alt" small="agora!">
-            Programe-se
-          </Badge>
-          <Badge variant="cyan" small="Santa Helena">
-            UTFPR
-          </Badge>
-          <Badge variant="dark" small="800×600">
-            {'C:\\>_'}
-          </Badge>
-          <NewBadge />
-        </div>
-        <WebHr />
-        <p>
-          Você é o visitante nº <VisitCounter n={1998} />
-        </p>
       </div>
     </div>
   );

@@ -113,20 +113,6 @@ body {
   position: relative;
 }
 
-.site-web {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-12);
-  background: var(--field);
-  color: var(--ink);
-  padding: var(--space-16);
-  box-shadow: var(--bevel-sunken);
-}
-.site-web p {
-  margin: 0;
-  font: 16px/22px var(--font-serif);
-}
-
 @media (max-width: 900px) {
   .site-windows {
     grid-template-columns: minmax(0, 1fr);
@@ -275,8 +261,7 @@ a.talk-speaker,
 .w98-startmenu,
 .w98-list,
 .w98-menu,
-.w98-body.is-doc,
-.site-web {
+.w98-body.is-doc {
   color: var(--ink);
 }
 
@@ -390,9 +375,6 @@ html[data-os] .os-hide {
   }
   .site-home > .site-desktop {
     flex: 1;
-  }
-  .site-home > .site-web {
-    margin-top: auto;
   }
 }
 
@@ -585,7 +567,7 @@ html[data-os] .os-hide {
 
   /* Ícones numa coluna; o espaço entre eles aperta em tela baixa. */
   .site-desktop .w98-icongrid {
-    gap: clamp(2px, calc((100dvh - 560px) / 6), 24px);
+    gap: clamp(2px, calc((100dvh - 540px) / 7), 24px);
   }
 
   /* CMD em cima (encolhe), atalhos embaixo dele. */
@@ -616,9 +598,9 @@ html[data-os] .os-hide {
   .site-hero .site-cmd-live {
     flex: none;
   }
-  /* A logo cabe na altura que sobra na tela (~430px são marquee, títulos, atalhos, selos e barra). */
+  /* A logo cabe na altura que sobra na tela (~370px são marquee, títulos, atalhos e barra). */
   .site-cmd-logo {
-    font-size: clamp(5px, min(calc(52cqi / 33.2), calc((100dvh - 430px) / 34)), 15px);
+    font-size: clamp(5px, min(calc(52cqi / 33.2), calc((100dvh - 370px) / 34)), 15px);
   }
   .site-cmd-info {
     font-size: clamp(14px, min(2.1cqi, 2.5dvh), 26px);
@@ -631,24 +613,30 @@ html[data-os] .os-hide {
   .site-readme {
     display: none;
   }
-
-  /* Selos 88×31 e contador numa faixa só. */
-  .site-home > .site-web {
-    flex: none;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: var(--space-8) var(--space-16);
-    padding: var(--space-8) var(--space-12);
-  }
-  .site-home > .site-web .web-hr {
-    display: none;
-  }
 }
 @media (min-width: 1600px) and (pointer: fine) {
   .site-readme {
     display: flex;
     align-self: start;
   }
+}
+
+/* ---------- Lixeira ---------- */
+.site-lixeira-actions {
+  padding: var(--space-4);
+}
+.site-lixeira-erro {
+  margin: 0 var(--space-4) var(--space-8);
+}
+.site-lixeira-erro b {
+  color: var(--danger);
+}
+/* Bloco de Notas: fonte de sistema, quebra de linha, sem fundo próprio. */
+.site-notepad {
+  margin: 0;
+  white-space: pre-wrap;
+  font:
+    13px/18px 'Courier New',
+    monospace;
+  color: var(--ink);
 }
