@@ -1,69 +1,99 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+import { Hero } from '@/components/event/Hero';
+import { InscricaoWindow } from '@/components/event/InscricaoWindow';
+import { Badge } from '@/components/web90s/Badge';
+import { NewBadge, WebHr } from '@/components/web90s/Enfeites';
+import { Marquee } from '@/components/web90s/Marquee';
+import { VisitCounter } from '@/components/web90s/VisitCounter';
+import { ButtonLink } from '@/components/win98/Button';
+import { DesktopIcon, IconGrid } from '@/components/win98/DesktopIcon';
+import { Window } from '@/components/win98/Window';
+import { NAV, SITE } from '@/lib/site';
 
 export default function Home() {
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>
-            To get started, edit the{" "}
-            <code className={styles.code}>page.tsx</code> file.
-          </h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
+    <div className="site-home">
+      <Marquee>
+        *** INSCRIÇÕES POR ATIVIDADE *** SETAC² 2026 *** 05 E 06/10 *** UTFPR SANTA HELENA *** TRAGA
+        SEU DISQUETE ***
+      </Marquee>
+
+      <div className="site-desktop">
+        <IconGrid label="Área de trabalho">
+          {NAV.filter((n) => n.href !== '/').map((n) => (
+            <DesktopIcon
+              key={n.href}
+              href={n.href}
+              icon={n.icone}
+              label={n.arquivo}
+              external={n.externo}
             />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+          ))}
+        </IconGrid>
+
+        <div className="site-windows">
+          <Hero />
+
+          {/* Atalhos fora do prompt (a hero é só o CMD). */}
+          <nav className="site-hero-ctas" aria-label="Atalhos">
+            <ButtonLink href="/#inscricao" big isDefault icon="/icons/documento.svg">
+              Fazer inscrição &gt;
+            </ButtonLink>
+            <ButtonLink href="/programacao" big icon="/icons/calendario.svg">
+              Programação
+            </ButtonLink>
+            <ButtonLink href="/palestrantes" big icon="/icons/equipe.svg">
+              Palestrantes
+            </ButtonLink>
+          </nav>
+
+          <Window
+            inactive
+            className="site-readme"
+            title="Leia-me.txt"
+            titleId="leiame-titulo"
+            icon="/icons/documento.svg"
+            doc
+            statusbar={['Pronto', '2 dia(s)', SITE.local]}
           >
-            Documentation
-          </a>
+            <p style={{ margin: '0 0 8px' }}>
+              <b>Setac² 2026</b>, a XIII Semana Tecnológica Acadêmica de Ciência da Computação.
+            </p>
+            <p style={{ margin: '0 0 8px' }}>
+              Dois dias (05 e 06/10) de palestras, minicursos, competição de programação e corujão
+              de jogos na UTFPR Santa Helena.
+            </p>
+            <p style={{ margin: 0 }}>
+              Abra os ícones do lado, ou use o menu Iniciar lá embaixo. Ou clique em qualquer coisa,
+              a gente não julga.
+            </p>
+          </Window>
+
+          {/* No PC a janela abre como pop-up pelo ícone; aqui fica para o celular e para /#inscricao. */}
+          <InscricaoWindow id="inscricao" inactive className="os-hide" />
         </div>
-      </main>
+      </div>
+
+      <div className="site-web">
+        <div className="site-row">
+          <Badge href="/" variant="brand" small="2026">
+            SETAC²
+          </Badge>
+          <Badge href="/programacao" variant="alt" small="agora!">
+            Programe-se
+          </Badge>
+          <Badge variant="cyan" small="Santa Helena">
+            UTFPR
+          </Badge>
+          <Badge variant="dark" small="800×600">
+            {'C:\\>_'}
+          </Badge>
+          <NewBadge />
+        </div>
+        <WebHr />
+        <p>
+          Você é o visitante nº <VisitCounter n={1998} />
+        </p>
+      </div>
     </div>
   );
 }

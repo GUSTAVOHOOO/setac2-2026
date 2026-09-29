@@ -1,0 +1,654 @@
+/*
+ * Setac² 2026 — estilos do site (layout das páginas e pequenas pontes para React/Next).
+ * Os componentes em si vêm de bundle.css; aqui só o que o design system deixa para "a página real".
+ */
+
+/* Fontes do next/font (layout.tsx) ligadas aos tokens do design system. */
+:root {
+  --font-pixel: var(--font-pixelify), 'Courier New', monospace;
+  --font-mono: var(--font-vt323), 'Courier New', monospace;
+}
+
+html,
+body {
+  margin: 0;
+}
+
+html {
+  background: var(--desktop);
+  scroll-padding-bottom: calc(var(--tap-min) + 16px);
+}
+
+body {
+  min-height: 100vh;
+  min-height: 100dvh;
+  /* Espaço da barra de tarefas fixa (+ área segura do iPhone). */
+  padding-bottom: calc(var(--tap-min) + env(safe-area-inset-bottom) + var(--space-16));
+}
+
+.pixel {
+  image-rendering: pixelated;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Pular para o conteúdo (visível só no foco). */
+.site-skip {
+  position: absolute;
+  left: var(--space-8);
+  top: -100px;
+  z-index: calc(var(--z-taskbar) + 1);
+  background: var(--tooltip);
+  color: var(--ink);
+  border: 1px solid var(--frame);
+  padding: var(--space-4) var(--space-8);
+}
+.site-skip:focus {
+  top: var(--space-8);
+}
+
+/* ---------- Página ---------- */
+.site-main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+  padding: var(--space-16);
+  max-width: 1120px;
+  margin: 0 auto;
+}
+
+.site-heading {
+  margin: 0;
+  color: var(--desktop-ink);
+}
+
+.site-lead {
+  margin: 0;
+  max-width: 60ch;
+  color: var(--desktop-ink);
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.site-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+  align-items: flex-start;
+}
+
+.site-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-8);
+  align-items: center;
+}
+
+/* ---------- Desktop (home) ---------- */
+.site-desktop {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--space-24);
+  align-items: start;
+  position: relative;
+}
+.site-desktop .w98-icongrid {
+  grid-template-columns: 76px;
+}
+.site-windows {
+  display: grid;
+  grid-template-columns: minmax(0, 640px) minmax(0, 1fr);
+  gap: var(--space-16);
+  align-items: start;
+  position: relative;
+}
+
+.site-web {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+  background: var(--field);
+  color: var(--ink);
+  padding: var(--space-16);
+  box-shadow: var(--bevel-sunken);
+}
+.site-web p {
+  margin: 0;
+  font: 16px/22px var(--font-serif);
+}
+
+@media (max-width: 900px) {
+  .site-windows {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .site-main {
+    padding: var(--space-8);
+    gap: var(--space-12);
+  }
+  .site-desktop {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-16);
+  }
+  .site-desktop .w98-icongrid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+/* ---------- Barra de tarefas fixa + menu Iniciar (no celular o menu entra no fluxo, acima da barra) ---------- */
+.site-bottom {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: var(--z-taskbar);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.site-bottom .w98-taskbar {
+  width: 100%;
+}
+.site-startmenu {
+  margin-left: var(--space-2);
+}
+.site-startmenu[hidden] {
+  display: none;
+}
+@media (max-width: 640px) {
+  .site-startmenu {
+    margin-left: 0;
+  }
+}
+
+/* Links dentro do menu ocupam o item inteiro (alvo de toque de 44px vem do li). */
+.w98-menu li > a {
+  display: flex;
+  align-items: center;
+  gap: inherit;
+  flex: 1;
+  align-self: stretch;
+  color: inherit;
+  text-decoration: none;
+}
+.w98-menu li > a:focus-visible {
+  outline: 1px dotted currentColor;
+  outline-offset: 1px;
+}
+.w98-menu li:focus-within {
+  background: var(--select);
+  color: var(--select-ink);
+}
+
+/* Links com cara de componente. */
+a.w98-task,
+a.talk-speaker,
+.w98-menubar > a {
+  text-decoration: none;
+}
+.talk-speaker {
+  text-decoration: none;
+}
+.w98-controls a {
+  display: block;
+  width: 16px;
+  height: 14px;
+  background: var(--face) center no-repeat;
+  box-shadow: var(--bevel-raised);
+}
+.w98-controls a.close {
+  margin-left: var(--space-2);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='7' shape-rendering='crispEdges'%3E%3Cpath d='M0 0h2v1h1v1h2V1h1V0h2v1H7v1H6v1H5v1h1v1h1v1h1v1H6V6H5V5H3v1H2v1H0V6h1V5h1V4h1V3H2V2H1V1H0z'/%3E%3C/svg%3E");
+}
+.w98-controls a:active {
+  box-shadow: var(--bevel-pressed);
+}
+.w98-controls a:focus-visible {
+  outline: 1px dotted var(--title-ink);
+  outline-offset: 1px;
+}
+@media (pointer: coarse) {
+  .w98-controls a {
+    width: 26px;
+    height: 22px;
+  }
+}
+
+/* Título da programação vira link quando há card da palestra. */
+.sch-main h4 a {
+  color: inherit;
+}
+
+/* Link no nome da lista (Explorer). */
+.w98-list-link {
+  color: inherit;
+}
+
+/* Botão de inscrição no rodapé do card. */
+.talk-actions {
+  padding-top: var(--space-4);
+}
+@media (max-width: 640px) {
+  .talk-actions > .w98-btn {
+    flex: 1;
+  }
+}
+
+/* Grade de cards nas listas de palestras/minicursos. */
+.site-cards {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+}
+
+/* 404 */
+.site-bsod {
+  min-height: calc(100dvh - var(--tap-min) - var(--space-16));
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.site-bsod a {
+  color: inherit;
+}
+
+/*
+ * Cor do texto nas superfícies do 98. O <body> é .w98-desktop (texto branco sobre o verde),
+ * e janelas, listas, menus e barra de tarefas herdavam esse branco: texto branco no fundo
+ * branco/cinza. Toda superfície clara volta para `ink`; quem tem cor própria (barra de título,
+ * hero, terminal, BSOD, selos) continua definindo a sua.
+ */
+.w98-window,
+.w98-taskbar,
+.w98-startmenu,
+.w98-list,
+.w98-menu,
+.w98-body.is-doc,
+.site-web {
+  color: var(--ink);
+}
+
+/* ---------- Sistema (PC): janelas pop-up sobre o desktop ---------- */
+.os-layer {
+  position: fixed;
+  inset: 0 0 var(--taskbar-h) 0;
+  z-index: 50;
+  pointer-events: none;
+  overflow: hidden;
+}
+.os-frame {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  max-width: calc(100% - var(--space-16));
+  pointer-events: auto;
+  outline: none;
+}
+.os-frame[hidden] {
+  display: none;
+}
+.os-frame.is-max {
+  inset: 0;
+  width: auto;
+  max-width: none;
+}
+.os-frame > .w98-window {
+  flex: 0 1 auto;
+  min-height: 0;
+  max-width: none;
+  width: 100%;
+  box-shadow: var(--bevel-raised), var(--window-drop);
+}
+.os-frame.is-max > .w98-window {
+  flex: 1;
+  box-shadow: var(--bevel-raised);
+}
+.os-frame .w98-titlebar {
+  cursor: default;
+  user-select: none;
+  touch-action: none;
+}
+/* Conteúdo rola dentro da janela; título e barra de status ficam fixos. */
+.os-client {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+}
+.os-frame .sch-list {
+  max-height: none;
+  overflow: visible;
+}
+.os-frame .w98-list {
+  overflow: visible;
+}
+
+/* No PC, o que abre como pop-up sai da home. */
+html[data-os] .os-hide {
+  display: none;
+}
+
+/* Botões da barra de tarefas: nome cortado com reticências. */
+.site-task-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* "Inscrições em breve": aviso em célula afundada, texto em `ink` (legível). */
+.site-soon {
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-6);
+  min-height: 24px;
+  padding: var(--space-2) var(--space-8);
+  background: var(--face);
+  color: var(--ink);
+  box-shadow: var(--bevel-status);
+  font: 13px/16px var(--font-sans);
+}
+.site-soon.is-big {
+  min-height: 32px;
+  font-size: 14px;
+}
+@media (pointer: coarse) {
+  .site-soon {
+    min-height: var(--tap-min);
+  }
+}
+
+/*
+ * ---------- Home em tela cheia (PC e tablet) ----------
+ * A home é a área de trabalho: ocupa a tela inteira em vez de uma coluna centralizada,
+ * com os ícones colados na esquerda e as janelas crescendo junto com o monitor.
+ */
+@media (min-width: 641px) {
+  .site-main {
+    max-width: none;
+    margin: 0;
+  }
+  .site-home {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-16);
+    /* Altura da tela menos o padding do main e o espaço da barra de tarefas. */
+    min-height: calc(100dvh - var(--space-16) - var(--tap-min) - var(--space-16) - var(--space-16));
+  }
+  .site-home > .site-desktop {
+    flex: 1;
+  }
+  .site-home > .site-web {
+    margin-top: auto;
+  }
+}
+
+/* Monitor largo: o prompt grande à esquerda (atalhos embaixo dele), Leia-me.txt ao lado. */
+@media (min-width: 1600px) {
+  .site-windows {
+    grid-template-columns: minmax(0, 1180px) minmax(320px, 480px);
+    justify-content: start;
+    gap: var(--space-24);
+  }
+  .site-windows > .site-hero {
+    grid-column: 1;
+    max-width: none;
+  }
+  .site-windows > .site-hero-ctas {
+    grid-column: 1;
+  }
+  .site-windows > .site-readme {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  .site-readme .w98-body.is-doc {
+    font-size: clamp(13px, 0.85vw, 16px);
+    line-height: 1.5;
+  }
+}
+
+/*
+ * ---------- Hero: prompt de comando (C:\SETAC2\setac2.exe) ----------
+ * Tela preta com texto cinza do MS-DOS, a logo em ASCII em dourado (como a logo oficial,
+ * sempre sobre preto) e as informações ao lado, estilo neofetch. A logo escala pela largura
+ * da janela (container query) e pela altura da tela, para caber sem rolar.
+ */
+@media (max-width: 1599px) {
+  .site-windows > .site-hero,
+  .site-windows > .site-hero-ctas {
+    grid-column: 1 / -1;
+  }
+}
+.site-hero {
+  max-width: 100%;
+}
+.site-cmd-screen {
+  margin-top: var(--space-2);
+  padding: var(--space-12) var(--space-16) var(--space-16);
+  background: var(--terminal);
+  color: var(--face);
+  box-shadow: var(--bevel-sunken);
+  font: 20px/1.15 var(--font-mono);
+  container-type: inline-size;
+  overflow: hidden;
+}
+.site-cmd-screen p {
+  margin: 0 0 0.6em;
+}
+.site-cmd-dim {
+  color: var(--shadow);
+}
+.site-cmd-fetch {
+  display: flex;
+  align-items: center;
+  gap: 2.5em;
+  margin: 0.4em 0 1em;
+}
+.site-cmd-logo {
+  margin: 0;
+  flex: none;
+  color: var(--brand);
+  font-family: var(--font-mono);
+  /* 83 colunas: o VT323 tem avanço de 0,4em; cabe na metade da janela e em ~45% da altura da tela. */
+  font-size: clamp(6px, min(calc(52cqi / 33.2), 1.3dvh), 15px);
+  line-height: 1;
+  white-space: pre;
+  user-select: none;
+}
+.site-cmd-info {
+  min-width: 0;
+  font-size: clamp(18px, 2.1cqi, 26px);
+}
+.site-cmd-info b {
+  color: var(--brand);
+  font-weight: 400;
+}
+.site-cmd-info dl {
+  margin: 0 0 0.6em;
+}
+.site-cmd-info dl > div {
+  display: flex;
+  gap: 0.5em;
+}
+.site-cmd-info dt {
+  flex: none;
+  color: var(--brand);
+}
+.site-cmd-info dd {
+  margin: 0;
+}
+.site-cmd-colors {
+  display: flex;
+}
+.site-cmd-colors > span {
+  width: 1.2em;
+  height: 1em;
+}
+.site-cmd-live {
+  color: var(--brand-light);
+  font-size: clamp(20px, 2.4cqi, 30px);
+  margin: 0 !important;
+}
+.site-cmd-cursor {
+  display: inline-block;
+  width: 0.5em;
+  height: 0.9em;
+  margin-left: 2px;
+  vertical-align: -0.1em;
+  background: currentColor;
+  animation: w98-blink 1s steps(1) infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .site-cmd-cursor {
+    animation: none;
+  }
+}
+
+/* Janela estreita: a logo vai para cima e ocupa a largura toda; as informações descem. */
+@container (max-width: 720px) {
+  .site-cmd-fetch {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1em;
+  }
+  .site-cmd-logo {
+    font-size: min(calc(100cqi / 33.2), 13px);
+    align-self: center;
+  }
+  .site-cmd-info {
+    font-size: 18px;
+  }
+  .site-cmd-live {
+    font-size: 20px;
+  }
+}
+
+/* Atalhos fora do prompt: botões do 98 soltos na área de trabalho. */
+.site-hero-ctas {
+  display: flex;
+  gap: var(--space-8);
+  flex-wrap: wrap;
+}
+@media (max-width: 640px) {
+  .site-cmd-screen {
+    padding: var(--space-8);
+  }
+  .site-hero-ctas > .w98-btn {
+    flex: 1 1 100%;
+  }
+}
+
+/*
+ * ---------- PC: a home cabe em uma tela, sem rolagem ----------
+ * Como um desktop de verdade: tudo entre o topo e a barra de tarefas. O CMD encolhe
+ * junto com a altura da tela (a logo em ASCII escala pelo dvh) e, se ainda faltar espaço,
+ * a área da logo é cortada, nunca a contagem regressiva. Celular e tablet de toque continuam
+ * rolando normalmente.
+ */
+@media (min-width: 641px) and (pointer: fine) {
+  html:has(.site-home),
+  body:has(.site-home) {
+    height: 100dvh;
+    overflow: hidden;
+  }
+  body:has(.site-home) {
+    box-sizing: border-box;
+    padding-bottom: var(--taskbar-h);
+  }
+  body:has(.site-home) .site-main {
+    box-sizing: border-box;
+    height: 100%;
+    padding: var(--space-12) var(--space-16);
+  }
+  .site-home {
+    height: 100%;
+    min-height: 0;
+    gap: var(--space-12);
+  }
+  .site-home > .site-desktop {
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+
+  /* Ícones numa coluna; o espaço entre eles aperta em tela baixa. */
+  .site-desktop .w98-icongrid {
+    gap: clamp(2px, calc((100dvh - 560px) / 6), 24px);
+  }
+
+  /* CMD em cima (encolhe), atalhos embaixo dele. */
+  .site-windows {
+    height: 100%;
+    min-height: 0;
+    grid-template-rows: minmax(0, max-content) auto;
+    align-content: start;
+    gap: var(--space-12);
+  }
+  .site-windows > .site-hero {
+    min-height: 0;
+  }
+  .site-hero .site-cmd-screen {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    padding-top: var(--space-8);
+    padding-bottom: var(--space-12);
+  }
+  .site-hero .site-cmd-fetch {
+    flex: 0 1 auto;
+    min-height: 0;
+    overflow: hidden;
+    margin-bottom: 0.6em;
+  }
+  .site-hero .site-cmd-live {
+    flex: none;
+  }
+  /* A logo cabe na altura que sobra na tela (~430px são marquee, títulos, atalhos, selos e barra). */
+  .site-cmd-logo {
+    font-size: clamp(5px, min(calc(52cqi / 33.2), calc((100dvh - 430px) / 34)), 15px);
+  }
+  .site-cmd-info {
+    font-size: clamp(14px, min(2.1cqi, 2.5dvh), 26px);
+  }
+  .site-cmd-live {
+    font-size: clamp(18px, min(2.4cqi, 3dvh), 30px);
+  }
+
+  /* Leia-me.txt só onde cabe ao lado do CMD; abaixo disso a dica está no próprio CMD. */
+  .site-readme {
+    display: none;
+  }
+
+  /* Selos 88×31 e contador numa faixa só. */
+  .site-home > .site-web {
+    flex: none;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--space-8) var(--space-16);
+    padding: var(--space-8) var(--space-12);
+  }
+  .site-home > .site-web .web-hr {
+    display: none;
+  }
+}
+@media (min-width: 1600px) and (pointer: fine) {
+  .site-readme {
+    display: flex;
+    align-self: start;
+  }
+}

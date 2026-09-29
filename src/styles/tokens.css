@@ -1,0 +1,74 @@
+/* Setac² 2026 — tokens (cópia de setac2-design-system/tokens.css, gerado de tokens.json) */
+:root {
+  --brand: #f5c802;
+  --brand-deep: #fca701;
+  --brand-light: #fbec1e;
+  --brand-ink: #000000;
+  --desktop: #008080;
+  --desktop-ink: #ffffff;
+  --face: #c0c0c0;
+  --face-light: #dfdfdf;
+  --highlight: #ffffff;
+  --shadow: #808080;
+  --frame: #000000;
+  --ink: #000000;
+  --ink-muted: #404040;
+  --ink-disabled: #808080;
+  --title: #000080;
+  --title-end: #1084d0;
+  --title-ink: #ffffff;
+  --title-inactive: #757575;
+  --title-inactive-end: #b5b5b5;
+  --select: #000080;
+  --select-ink: #ffffff;
+  --field: #ffffff;
+  --tooltip: #ffffe1;
+  --link: #0000ee;
+  --link-visited: #551a8b;
+  --bsod: #0000aa;
+  --bsod-ink: #ffffff;
+  --terminal: #000000;
+  --terminal-ink: #33ff33;
+  --hype: #ffff00;
+  --hype-alt: #ff00ff;
+  --hype-cyan: #00ffff;
+  --danger: #800000;
+  --success: #008000;
+  --space-2: 2px;
+  --space-4: 4px;
+  --space-6: 6px;
+  --space-8: 8px;
+  --space-12: 12px;
+  --space-16: 16px;
+  --space-24: 24px;
+  --space-32: 32px;
+  --icon-sm: 16px;
+  --icon-lg: 32px;
+  --taskbar-h: 32px;
+  --tap-min: 44px;
+  --radius-none: 0px;
+  --bevel-raised: inset -1px -1px #000000, inset 1px 1px #ffffff, inset -2px -2px #808080, inset 2px 2px #dfdfdf;
+  --bevel-sunken: inset -1px -1px #ffffff, inset 1px 1px #808080, inset -2px -2px #dfdfdf, inset 2px 2px #000000;
+  --bevel-pressed: inset -1px -1px #ffffff, inset 1px 1px #000000, inset -2px -2px #dfdfdf, inset 2px 2px #808080;
+  --bevel-default: inset -2px -2px #000000, inset 2px 2px #000000, inset -3px -3px #808080, inset 3px 3px #ffffff;
+  --bevel-status: inset -1px -1px #ffffff, inset 1px 1px #808080;
+  --window-drop: 4px 4px 0 #000000;
+  --z-window: 10;
+  --z-menu: 100;
+  --z-taskbar: 200;
+  --font-pixel: "Pixelify Sans", "Courier New", monospace;
+  --font-sans: Tahoma, "Microsoft Sans Serif", "MS Sans Serif", Verdana, sans-serif;
+  --font-mono: VT323, "Courier New", monospace;
+  --font-serif: "Times New Roman", Times, serif;
+}
+.display-xl { font-family: var(--font-pixel); font-size: 64px; line-height: 64px; font-weight: 700; }
+.display { font-family: var(--font-pixel); font-size: 40px; line-height: 44px; font-weight: 600; }
+.display-sm { font-family: var(--font-pixel); font-size: 24px; line-height: 28px; font-weight: 500; }
+.title { font-family: var(--font-sans); font-size: 13px; line-height: 18px; font-weight: 700; }
+.body { font-family: var(--font-sans); font-size: 14px; line-height: 20px; font-weight: 400; }
+.ui { font-family: var(--font-sans); font-size: 13px; line-height: 16px; font-weight: 400; }
+.small { font-family: var(--font-sans); font-size: 12px; line-height: 16px; font-weight: 400; }
+.terminal { font-family: var(--font-mono); font-size: 22px; line-height: 24px; font-weight: 400; }
+.clock { font-family: var(--font-mono); font-size: 18px; line-height: 20px; font-weight: 400; }
+.web-heading { font-family: var(--font-serif); font-size: 28px; line-height: 32px; font-weight: 700; }
+.web-body { font-family: var(--font-serif); font-size: 16px; line-height: 22px; font-weight: 400; }

@@ -1,0 +1,11 @@
+node_modules
+.next
+out
+build
+.vercel
+package-lock.json
+next-env.d.ts
+public
+# Cópias do design system: mantidas idênticas à origem para facilitar a sincronização
+src/styles/tokens.css
+src/styles/bundle.css
