@@ -3,9 +3,12 @@ import { Pixelify_Sans, VT323 } from 'next/font/google';
 import { OsProvider } from '@/components/os/OsProvider';
 import { Taskbar } from '@/components/win98/Taskbar';
 import { SITE } from '@/lib/site';
+import { BootScreen } from '@/components/boot/BootScreen';
+import { bootBootstrap } from '@/components/boot/bootstrap';
 import '@/styles/tokens.css';
 import '@/styles/bundle.css';
 import '@/styles/site.css';
+import '@/styles/boot.css';
 
 /* As fontes viram as variáveis --font-pixelify / --font-vt323, ligadas aos tokens em site.css. */
 const pixelify = Pixelify_Sans({
@@ -51,17 +54,25 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="pt-BR" className={`${pixelify.variable} ${vt323.variable}`}>
+    <html
+      lang="pt-BR"
+      className={`${pixelify.variable} ${vt323.variable}`}
+      suppressHydrationWarning
+    >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: bootBootstrap }} />
+      </head>
       <body className="w98 w98-desktop">
         <a className="site-skip" href="#conteudo">
           Pular para o conteúdo
         </a>
         <OsProvider>
-          <main id="conteudo" className="site-main">
+          <main id="conteudo" className="site-main" tabIndex={-1}>
             {children}
           </main>
           <Taskbar />
         </OsProvider>
+        <BootScreen />
       </body>
     </html>
   );

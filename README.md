@@ -122,6 +122,31 @@ As janelas pop-up do PC estão em `src/components/os/`: `apps.tsx` diz qual rota
 (e com que largura), e `OsProvider.tsx` cuida de abrir, focar, arrastar e minimizar. No celular o
 mesmo link só navega para a página.
 
+## Abertura Windows 98
+
+Boot decorativo de 4,8 segundos: POST, passagem DOS, logo Windows 98 e entrada no desktop.
+Aparece uma vez por sessão da aba, com **Pular abertura** e **Esc**; pular também registra a sessão.
+Com movimento reduzido, o conteúdo abre diretamente. Não há áudio automático.
+
+Depois do boot completo, o desktop se monta em aproximadamente 1,1 segundo com Anime.js:
+barra de tarefas, ícones, contornos dos títulos e pintura das janelas. A sequência usa passos
+discretos inspirados no Windows 98. Só ocorre após o término automático do splash; **Pular**
+e **Esc** abrem tudo pronto. Qualquer interação durante a montagem termina o efeito, assim
+como redimensionar a tela ou ativar movimento reduzido. Recarregar a mesma sessão não repete.
+O efeito fica isolado em `src/components/boot/revealDesktop.ts`, sem alterar a posição ou o
+arraste das janelas. [Referências da animação](docs/research/windows-98-desktop-animation.md).
+
+A sequência fica em `src/components/boot/BootScreen.tsx`, o estilo em `src/styles/boot.css`
+e a logo local em `public/boot/` (origem registrada no README dessa pasta). A logo Windows
+é uma exceção ao design system solicitada pelo responsável pelo projeto.
+
+Para rever na mesma aba, execute `sessionStorage.removeItem('setac2:boot-seen')` no console
+do navegador e recarregue. Sem armazenamento disponível, o boot continua pulável, mas pode
+repetir após recargas. Sem JavaScript, a página abre normalmente; se a hidratação falhar,
+a proteção de carregamento libera o conteúdo em até 8 segundos.
+
+Pesquisa e decisões: [inicialização Windows 98](docs/research/windows-98-boot.md).
+
 ## Deploy
 
 Feito para a [Vercel](https://vercel.com): importe o repositório e pronto, sem configuração
@@ -138,5 +163,6 @@ Achou um bug ou quer ajudar? Abra uma issue ou um pull request. Antes de mandar,
 O código está sob a licença [MIT](LICENSE). A logo e o nome Setac², as fotos dos palestrantes e
 as informações do evento pertencem aos seus donos e não entram nessa licença.
 
-A estética é emprestada do Windows 98, mas as marcas não: nenhum ícone ou logo da Microsoft é
-usado; os ícones são pixel art original.
+Os ícones do site são pixel art original. A abertura usa a logo Windows 98, atribuída à Microsoft,
+por solicitação do responsável pelo projeto; a origem está em [public/boot/README.md](public/boot/README.md).
+Essa marca não faz parte da licença MIT do código.

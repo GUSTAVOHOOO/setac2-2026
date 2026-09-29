@@ -1,0 +1,229 @@
+/* The Windows logo is the user-approved exception to the Setac² brand rules. */
+html[data-boot='pending'] {
+  overflow: hidden;
+}
+
+/* Pre-paint cover; watchdog removes it if hydration fails. No JS = no cover. */
+html[data-boot='pending']::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: calc(var(--z-taskbar) + 1);
+  background: #000;
+}
+
+.boot-screen {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  height: 100dvh;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: #000;
+  color: #c0c0c0;
+  overflow: hidden;
+}
+
+.boot-screen::backdrop {
+  background: #000;
+}
+
+.boot-panel {
+  position: absolute;
+  inset: 0;
+  display: none;
+}
+
+.boot-screen[data-phase='post'] .boot-post,
+.boot-screen[data-phase='dos'] .boot-dos,
+.boot-screen[data-phase='splash'] .boot-splash,
+.boot-screen[data-phase='desktop'] .boot-desktop {
+  display: flex;
+}
+
+.boot-post,
+.boot-dos {
+  flex-direction: column;
+  align-items: flex-start;
+  padding: clamp(20px, 4vw, 56px);
+  padding-bottom: 88px;
+  font: clamp(18px, 2.3vw, 28px) / 1.2 var(--font-mono);
+}
+
+.boot-post p,
+.boot-dos p {
+  margin: 0 0 0.3em;
+}
+
+.boot-bios-heading {
+  color: #fff;
+  margin-bottom: 1.6em;
+}
+
+.boot-post-line {
+  visibility: hidden;
+  animation: boot-line 1ms step-end forwards;
+}
+
+.boot-post-memory {
+  animation-delay: 220ms;
+}
+.boot-post-drives {
+  animation-delay: 520ms;
+  margin-top: 1em;
+}
+.boot-post-ready {
+  animation-delay: 850ms;
+  margin-top: 1em !important;
+}
+
+.boot-cursor {
+  animation: boot-cursor 700ms steps(1) infinite;
+}
+
+.boot-splash {
+  flex-direction: column;
+  background: #c7dce9;
+}
+
+/* A light sky evokes the original splash; the logo itself is an unmodified local asset. */
+.boot-splash-picture {
+  flex: 1;
+  display: grid;
+  place-items: center;
+  padding: 40px 24px 100px;
+  background:
+    radial-gradient(ellipse at 16% 65%, #fff 0%, transparent 55%),
+    radial-gradient(ellipse at 85% 30%, #ffffffdf 0%, transparent 48%),
+    linear-gradient(160deg, #80b0d2, #dcebf2 60%, #9fc8df);
+}
+
+.boot-windows-logo {
+  width: min(580px, 74vw);
+  height: auto;
+  max-height: 65dvh;
+  object-fit: contain;
+}
+
+.boot-activity {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 12px;
+  overflow: hidden;
+  background: #bfc8d5;
+}
+
+.boot-activity span {
+  display: block;
+  width: 200%;
+  height: 100%;
+  background: repeating-linear-gradient(90deg, #142780 0%, #7298c2 12%, #d4e3ed 24%, #142780 50%);
+  animation: boot-activity 900ms linear infinite;
+}
+
+.boot-desktop {
+  align-items: center;
+  justify-content: center;
+  background: var(--desktop);
+}
+
+.boot-desktop img {
+  image-rendering: pixelated;
+}
+
+.boot-controls {
+  position: absolute;
+  right: max(24px, env(safe-area-inset-right));
+  bottom: max(28px, env(safe-area-inset-bottom));
+  display: flex;
+  align-items: center;
+  gap: var(--space-12);
+  font: 13px var(--font-sans);
+}
+
+.boot-controls .w98-btn {
+  min-height: var(--tap-min);
+}
+.boot-screen[data-phase='splash'] .boot-key-hint {
+  color: #182a40;
+}
+.boot-screen[data-phase='desktop'] .boot-key-hint {
+  color: var(--desktop-ink);
+}
+
+@keyframes boot-line {
+  to {
+    visibility: visible;
+  }
+}
+@keyframes boot-cursor {
+  50% {
+    visibility: hidden;
+  }
+}
+@keyframes boot-activity {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (max-width: 640px) {
+  .boot-post,
+  .boot-dos {
+    padding: 24px 16px 96px;
+  }
+  .boot-controls {
+    right: 16px;
+  }
+  .boot-key-hint {
+    display: none;
+  }
+  .boot-windows-logo {
+    width: 88vw;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .boot-screen *,
+  .boot-screen *::before {
+    animation: none !important;
+  }
+}
+
+/* Win9x-style paint passes: no opacity/scale animation and no changes to window geometry. */
+[data-boot-reveal='waiting'] {
+  visibility: hidden;
+}
+
+html[data-desktop-reveal='running'],
+html[data-desktop-reveal='running'] * {
+  cursor: progress;
+}
+
+.boot-caption-outline {
+  position: fixed;
+  z-index: calc(var(--z-taskbar) + 1);
+  height: 22px;
+  box-sizing: border-box;
+  border: 1px solid #fff;
+  outline: 1px solid #000;
+  box-shadow: inset 0 0 0 1px #000;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-boot-reveal] {
+    visibility: visible;
+    clip-path: none !important;
+  }
+  .boot-caption-outline {
+    display: none;
+  }
+}
