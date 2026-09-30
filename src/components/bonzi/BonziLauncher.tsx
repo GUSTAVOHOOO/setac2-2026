@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState, type ComponentType } from 'react';
 import type { BonziProps } from './BonziCompanion';
+import { BONZI_HASH, BONZI_OPEN_EVENT } from './events';
 
 function loadSprite(signal: AbortSignal) {
   return new Promise<void>((resolve, reject) => {
@@ -67,6 +68,22 @@ export function BonziLauncher() {
       if (pending.current === controller) pending.current = null;
     }
   };
+
+  // O menu Iniciar (a navegação do celular, onde este ícone não aparece) também abre o Bonzi:
+  // na home por evento; de outra página, chegando em /#bonzi.
+  const activateRef = useRef(activate);
+  useEffect(() => {
+    activateRef.current = activate;
+  });
+  useEffect(() => {
+    const onOpen = () => void activateRef.current();
+    window.addEventListener(BONZI_OPEN_EVENT, onOpen);
+    if (window.location.hash === BONZI_HASH) {
+      window.history.replaceState(null, '', window.location.pathname + window.location.search);
+      onOpen();
+    }
+    return () => window.removeEventListener(BONZI_OPEN_EVENT, onOpen);
+  }, []);
 
   return (
     <>

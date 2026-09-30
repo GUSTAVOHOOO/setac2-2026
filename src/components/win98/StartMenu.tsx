@@ -1,6 +1,8 @@
 'use client';
 
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { BONZI_HASH, BONZI_OPEN_EVENT } from '@/components/bonzi/events';
 import type { NavItem } from '@/lib/site';
 import { Atalho } from './Atalho';
 import { PixelIcon } from './PixelIcon';
@@ -23,6 +25,7 @@ export function StartMenu({
   atual?: string;
   onNavigate: () => void;
 }) {
+  const pathname = usePathname();
   return (
     <div className="w98-startmenu site-startmenu" id={id} hidden={!open}>
       <div className="w98-startmenu-side" aria-hidden="true">
@@ -56,6 +59,26 @@ export function StartMenu({
               </li>
             );
           })}
+          <li className="site-startmenu-sep" aria-hidden="true">
+            <hr />
+          </li>
+          <li>
+            {/* Na home abre na hora; de outra página, volta para a home já com ele. */}
+            <Link
+              href={`/${BONZI_HASH}`}
+              onClick={(e) => {
+                onNavigate();
+                if (pathname !== '/') return;
+                e.preventDefault();
+                window.dispatchEvent(new Event(BONZI_OPEN_EVENT));
+              }}
+            >
+              <PixelIcon src="/bonzi/icon.png" size={24} />
+              <span>
+                <Atalho>[B]onziBuddy</Atalho>
+              </span>
+            </Link>
+          </li>
         </ul>
       </nav>
     </div>

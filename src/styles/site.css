@@ -656,7 +656,8 @@ html[data-os] .os-hide {
   .site-only-narrow {
     display: inline;
   }
-  .site-home .site-desktop .w98-icongrid {
+  /* Só os ícones saem: a grade fica, porque o BonziBuddy aberto mora nela. */
+  .site-home .site-desktop .w98-icongrid > .w98-icon {
     display: none;
   }
   .site-home .site-desktop {
@@ -697,4 +698,13 @@ html[data-os] .os-hide {
     white-space: normal;
     overflow-wrap: anywhere;
   }
+}
+
+/* Separador do menu Iniciar (antes do BonziBuddy): fino, sem alvo de toque nem seleção. */
+.w98-menu li.site-startmenu-sep {
+  display: block;
+  min-height: 0;
+  padding: 0;
+  background: none;
+  pointer-events: none;
 }

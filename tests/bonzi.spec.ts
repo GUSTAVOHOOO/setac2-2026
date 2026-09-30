@@ -67,14 +67,28 @@ test('requested speech still expires while paused and taskbar size is respected'
   expect(box.y + box.height).toBeLessThanOrEqual(taskbar.y);
 });
 
-// No celular (≤ 640px) os ícones da área de trabalho saem, o BonziBuddy junto.
+/** No celular (≤ 640px) não há ícones na área de trabalho: o Bonzi abre pelo menu Iniciar. */
+async function abrirPeloMenu(page: import('@playwright/test').Page) {
+  await page.getByRole('button', { name: 'Iniciar', exact: true }).click();
+  await page
+    .getByRole('navigation', { name: 'Menu Iniciar' })
+    .getByRole('link', { name: 'BonziBuddy' })
+    .click();
+}
+
 for (const viewport of [
   { width: 1440, height: 900 },
-  { width: 1024, height: 700 },
+  { width: 390, height: 844 },
+  { width: 320, height: 568 },
 ]) {
   test(`fits viewport and keeps controls accessible at ${viewport.width}`, async ({ page }) => {
     await page.setViewportSize(viewport);
-    await page.getByRole('button', { name: 'Abrir BonziBuddy' }).click();
+    if (viewport.width > 640) {
+      await page.getByRole('button', { name: 'Abrir BonziBuddy' }).click();
+    } else {
+      await expect(page.getByRole('button', { name: 'Abrir BonziBuddy' })).toBeHidden();
+      await abrirPeloMenu(page);
+    }
     const bonzi = page.getByRole('region', { name: 'BonziBuddy' });
     await expect(bonzi).toBeVisible();
     const box = await bonzi.boundingBox();
@@ -87,6 +101,21 @@ for (const viewport of [
     await page.screenshot({ path: `test-results/bonzi-${viewport.width}.png` });
   });
 }
+
+test('start menu opens Bonzi on mobile, also from another page', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  const bonzi = page.getByRole('region', { name: 'BonziBuddy' });
+  await abrirPeloMenu(page);
+  await expect(bonzi).toBeVisible();
+  await expect(page.locator('.site-startmenu')).toBeHidden();
+  await page.getByRole('button', { name: 'Tchau, Bonzi' }).click();
+  await expect(bonzi).toHaveCount(0);
+
+  await page.goto('/programacao');
+  await abrirPeloMenu(page);
+  await expect(page).toHaveURL(/\/$/);
+  await expect(bonzi).toBeVisible();
+});
 
 test('gesture plays under focus, reading holds bubble and reduced motion stops travel', async ({
   page,
