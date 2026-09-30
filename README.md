@@ -150,6 +150,35 @@ a proteção de carregamento libera o conteúdo em até 8 segundos.
 
 Pesquisa e decisões: [inicialização Windows 98](docs/research/windows-98-boot.md).
 
+## BonziBuddy
+
+Clique em **BonziBuddy.exe**, ao lado do terminal, para chamar o gorila roxo.
+Ele chega surfando, passeia pela tela e conta piadas de computação em português,
+sem som. Clique nele para conversar; **Pausar** suspende a atividade automática
+e **Tchau, Bonzi** o dispensa. Só existe uma instância por vez e ele não reaparece
+automaticamente depois de recarregar ou sair da home.
+
+O personagem e a sprite sheet carregam ao ativar o atalho. Movimento reduzido
+mantém a pose estática e falas por clique. Controles funcionam com teclado e toque;
+a animação para enquanto a aba está oculta. A arte usa os sprites históricos,
+com origem e situação da licença em [public/bonzi/README.md](public/bonzi/README.md).
+
+Para verificar o comportamento:
+
+```sh
+npm run test:bonzi
+npm run build
+npm run test:e2e
+```
+
+Os testes unitários usam o suporte nativo a TypeScript do Node 22.18+ (o site
+mantém seu requisito de Node 20.9+). Os testes de navegador usam Chrome instalado
+e sobem um servidor de produção na porta 3178, que deve estar livre.
+Capturas de desktop e celular ficam em `test-results/` após os testes.
+
+Pesquisa: [BonziBuddy](docs/research/2026-09-29-bonzibuddy-research.md).
+Plano e verificação: [implementação](docs/superpowers/plans/2026-09-29-bonzibuddy.md).
+
 ## Deploy
 
 Feito para a [Vercel](https://vercel.com): importe o repositório e pronto, sem configuração
@@ -166,6 +195,7 @@ Achou um bug ou quer ajudar? Abra uma issue ou um pull request. Antes de mandar,
 O código está sob a licença [MIT](LICENSE). A logo e o nome Setac², as fotos dos palestrantes e
 as informações do evento pertencem aos seus donos e não entram nessa licença.
 
-Os ícones do site são pixel art original. A abertura usa a logo Windows 98, atribuída à Microsoft,
+Os ícones do site são pixel art original, com exceção do BonziBuddy, derivado dos sprites históricos da Bonzi Software. Esses sprites não estão cobertos pela licença MIT do código; sua procedência está em [public/bonzi/README.md](public/bonzi/README.md).
+A abertura usa a logo Windows 98, atribuída à Microsoft,
 por solicitação do responsável pelo projeto; a origem está em [public/boot/README.md](public/boot/README.md).
 Essa marca não faz parte da licença MIT do código.
