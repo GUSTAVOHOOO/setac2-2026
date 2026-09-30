@@ -23,14 +23,28 @@ export const PALESTRANTES: Record<string, Palestrante> = {
     palestra: 'direito-digital',
     foto: '/palestrantes/leticia-remonti.jpg',
   },
+  'isadora-ferrao': {
+    nome: 'Isadora Garcia Ferrão',
+    bio: [
+      'Pós-doutoranda no Lab-STICC, Université de Bretagne Occidentale (França)',
+      'Doutora e mestre em Ciências de Computação (PPG-CCMC), USP São Carlos, com sanduíche na França, Inglaterra e República Tcheca',
+      'Bacharela em Ciência da Computação, UNIPAMPA Alegrete, Prêmio Aluno Destaque da SBC (2018)',
+      'Pesquisa safety e security em veículos aéreos autônomos',
+    ],
+    palestra: 'cyber-veiculos',
+  },
   'gustavo-quieregato': {
     nome: 'Gustavo Silva Quieregato',
-    bio: [],
+    bio: [
+      'Desenvolvedor Especialista no ecossistema UOL',
+      'Experiência em desenvolvimento web e inteligência artificial',
+      'Aluno do programa de Dupla Diplomação',
+    ],
     palestra: 'mercado',
   },
   'gabriel-scheffler': {
     nome: 'Gabriel Lima Scheffler',
-    bio: [],
+    bio: ['Certificado AWS Cloud Practitioner'],
     palestra: 'aws',
     foto: '/palestrantes/gabriel-scheffler.jpg',
   },
@@ -47,6 +61,7 @@ export const ORDEM_PALESTRANTES: string[] = [
   'daniel-costa',
   'adrieli-ritt',
   'leticia-remonti',
+  'isadora-ferrao',
   'gustavo-quieregato',
   'gabriel-scheffler',
   'welington-ferreira',

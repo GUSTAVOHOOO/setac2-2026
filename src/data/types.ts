@@ -9,6 +9,8 @@ export type Tipo =
 export interface Atividade {
   /** id em PALESTRAS: liga a linha da programação ao card da palestra/minicurso. */
   palestra?: PalestraId;
+  /** Atividade sem card mas com inscrição própria (id em INSCRICOES_ATIVIDADES). */
+  inscricao?: AtividadeInscricaoId;
   periodo: string;
   /** HH:MM (horário de Brasília). */
   inicio: string;
@@ -79,3 +81,8 @@ export const PALESTRA_IDS = [
 ] as const;
 
 export type PalestraId = (typeof PALESTRA_IDS)[number];
+
+/** Atividades da programação que não têm card, mas têm inscrição (Google Forms). */
+export const ATIVIDADE_INSCRICAO_IDS = ['competicao', 'corujao'] as const;
+
+export type AtividadeInscricaoId = (typeof ATIVIDADE_INSCRICAO_IDS)[number];

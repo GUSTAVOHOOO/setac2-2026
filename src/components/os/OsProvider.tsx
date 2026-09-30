@@ -78,7 +78,7 @@ export function OsProvider({ children }: { children: ReactNode }) {
   const zTop = useRef(0);
   const abertas = useRef(0);
 
-  const open = useCallback((href: string, from?: Rect | null) => {
+  const open = useCallback((href: string, from?: Rect | null, noCanto?: boolean) => {
     const app = resolve(href);
     if (!app) return;
     const z = ++zTop.current;
@@ -88,6 +88,23 @@ export function OsProvider({ children }: { children: ReactNode }) {
         return ws.map((w) => (w.key === app.key ? { ...w, href, z, min: false } : w));
       }
       hourglass();
+      if (noCanto) {
+        // Encostada no canto superior direito, fora da cascata.
+        const w = Math.min(app.width, window.innerWidth - 16);
+        return [
+          ...ws,
+          {
+            key: app.key,
+            href,
+            z,
+            min: false,
+            max: false,
+            x: Math.max(8, window.innerWidth - w - 16),
+            y: 16,
+            from: from ?? undefined,
+          },
+        ];
+      }
       // Cascata como no 98: a primeira à direita dos ícones do desktop, as seguintes um pouco
       // abaixo e à direita da anterior.
       const n = abertas.current++ % 8;
@@ -166,10 +183,16 @@ export function OsProvider({ children }: { children: ReactNode }) {
 
   // No PC, abrir /programacao (ou outro "programa") direto vira: desktop + a janela aberta.
   // A janela só abre depois que a home renderizou (para a cascata saber onde ficam os ícones).
+  // Na primeira vez que o desktop aparece, a Inscrição.txt já vem aberta no canto direito.
   const pendente = useRef<string | null>(null);
+  const inscricaoAberta = useRef(false);
   useEffect(() => {
     if (!osMode) return;
     if (pathname === '/') {
+      if (!inscricaoAberta.current) {
+        inscricaoAberta.current = true;
+        open('/#inscricao', null, true);
+      }
       if (pendente.current) open(pendente.current);
       pendente.current = null;
       return;

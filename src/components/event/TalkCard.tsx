@@ -106,7 +106,7 @@ export function TalkCard({
       </dl>
 
       <div className="w98-actions is-end talk-actions">
-        <InscricaoButton url={t.aDefinir ? undefined : t.inscricaoUrl} titulo={t.titulo} />
+        <InscricaoButton url={t.inscricaoUrl} titulo={t.titulo} />
       </div>
     </Window>
   );

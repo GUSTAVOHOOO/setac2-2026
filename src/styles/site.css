@@ -222,6 +222,35 @@ a.talk-speaker,
   color: inherit;
 }
 
+/* Link "Inscrever-se" (Google Forms, nova aba) na Inscrição.txt e na programação. */
+.site-signup {
+  color: var(--link);
+  font-weight: 700;
+  text-decoration: underline;
+}
+.sch-signup {
+  display: inline-block;
+  margin-top: 2px;
+  font-size: 13px;
+  line-height: 18px;
+}
+.sch-item.is-now .sch-signup {
+  color: var(--brand-light);
+}
+@media (hover: hover) {
+  .sch-item:not(.is-now):hover .sch-signup,
+  .w98-list tbody tr:hover .site-signup {
+    color: var(--select-ink);
+  }
+}
+
+/* Inscrição.txt: nomes longos quebram linha para o link de inscrição caber na janela. */
+.site-inscricoes .w98-list td:first-child {
+  white-space: normal;
+  padding-left: 28px;
+  text-indent: -22px;
+}
+
 /* Botão de inscrição no rodapé do card. */
 .talk-actions {
   padding-top: var(--space-4);

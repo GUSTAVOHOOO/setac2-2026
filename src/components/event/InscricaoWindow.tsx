@@ -1,11 +1,10 @@
 import { ListView } from '@/components/win98/ListView';
 import { Note } from '@/components/win98/Tooltip';
 import { Window } from '@/components/win98/Window';
-import { getPalestra, hrefPalestra } from '@/lib/event';
+import { listarInscricoes } from '@/lib/event';
 import { diaMesBR } from '@/lib/format';
-import { PALESTRA_IDS } from '@/data/types';
 
-/** Janela Inscrição.txt: como se inscrever + todas as atividades com o status da inscrição. */
+/** Janela Inscrição.txt: como se inscrever + todas as atividades com o link da inscrição. */
 export function InscricaoWindow({
   id,
   titleId = 'inscricao-titulo',
@@ -18,7 +17,7 @@ export function InscricaoWindow({
   inactive?: boolean;
   className?: string;
 }) {
-  const atividades = PALESTRA_IDS.map(getPalestra);
+  const atividades = listarInscricoes();
   return (
     <Window
       id={id}
@@ -31,21 +30,33 @@ export function InscricaoWindow({
     >
       <div className="site-stack">
         <Note title="Como se inscrever">
-          Cada palestra e minicurso tem sua própria inscrição. Escolha abaixo e clique em{' '}
-          <b>Inscrever-se</b>.
+          Cada atividade tem sua própria inscrição. Escolha abaixo e clique em <b>Inscrever-se</b>{' '}
+          (o formulário abre em outra aba).
         </Note>
-        <div style={{ width: '100%' }}>
+        <div className="site-inscricoes" style={{ width: '100%' }}>
           <ListView
             caption="Atividades com inscrição"
             columns={[{ label: 'Nome' }, { label: 'Dia' }, { label: 'Inscrição' }]}
             rows={atividades.map((a) => ({
-              key: a.id,
-              icon: a.mini ? '/icons/disquete.svg' : '/icons/megafone.svg',
-              name: `${a.rotulo}: ${a.titulo}`,
-              href: hrefPalestra(a.id),
+              key: a.key,
+              icon: a.icone,
+              name: a.nome,
+              href: a.href,
               cells: [
                 `${diaMesBR(a.data)} · ${a.inicio}`,
-                a.inscricaoUrl && !a.aDefinir ? 'Aberta' : 'Em breve',
+                a.url ? (
+                  <a
+                    href={a.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="site-signup"
+                    aria-label={`Inscrever-se em ${a.nome} (abre o formulário em nova aba)`}
+                  >
+                    Inscrever-se
+                  </a>
+                ) : (
+                  'Em breve'
+                ),
               ],
             }))}
           />

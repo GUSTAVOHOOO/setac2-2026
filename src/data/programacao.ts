@@ -26,7 +26,8 @@ export const ICONES_TIPO: Record<Tipo, string> = {
 
 /**
  * Programação oficial (planilha Programacao_SETAC_2026).
- * Horários podem ser ajustados pela organização. O campo `palestra` usa os ids de `palestras.ts`.
+ * Horários podem ser ajustados pela organização. O campo `palestra` usa os ids de `palestras.ts`;
+ * `inscricao` liga atividades sem card (competição, corujão) ao link em `inscricoes.ts`.
  */
 export const PROGRAMACAO: Programacao = {
   evento: 'Setac² 2026',
@@ -56,7 +57,7 @@ export const PROGRAMACAO: Programacao = {
         {
           periodo: 'Manhã',
           inicio: '09:30',
-          fim: '10:30',
+          fim: '11:00',
           tipo: 'palestra',
           palestra: 'direito-digital',
           titulo: 'Palestra de abertura',
@@ -65,16 +66,17 @@ export const PROGRAMACAO: Programacao = {
         },
         {
           periodo: 'Manhã',
-          inicio: '10:30',
-          fim: '12:00',
+          inicio: '11:00',
+          fim: '12:30',
           tipo: 'palestra',
           palestra: 'cyber-veiculos',
           titulo: 'Palestra de abertura',
           desc: 'Expert em cybersecurity: experiências trabalhando com detecção de ataques em veículos autônomos',
+          quem: 'Dra. Isadora Ferrão',
         },
         {
           periodo: 'Almoço',
-          inicio: '12:00',
+          inicio: '12:30',
           fim: '13:30',
           tipo: 'intervalo',
           titulo: 'Intervalo para almoço',
@@ -87,7 +89,7 @@ export const PROGRAMACAO: Programacao = {
           tipo: 'minicurso',
           palestra: 'aws',
           titulo: 'Minicurso 1',
-          desc: 'Introdução AWS',
+          desc: 'Preparatório AWS Cloud Practitioner (CLF-C02)',
           quem: 'Gabriel Lima Scheffler e Welington Ferreira',
         },
         {
@@ -103,6 +105,7 @@ export const PROGRAMACAO: Programacao = {
           inicio: '16:30',
           fim: '19:30',
           tipo: 'competicao',
+          inscricao: 'competicao',
           titulo: 'Competição de programação',
           desc: 'Desafios no estilo LeetCode',
         },
@@ -159,7 +162,7 @@ export const PROGRAMACAO: Programacao = {
         {
           periodo: 'Tarde',
           inicio: '14:30',
-          fim: '16:30',
+          fim: '16:00',
           tipo: 'minicurso',
           palestra: 'minicurso-2',
           titulo: 'Minicurso 2',
@@ -179,6 +182,7 @@ export const PROGRAMACAO: Programacao = {
           inicio: '16:30',
           fim: '22:00',
           tipo: 'jogos',
+          inscricao: 'corujao',
           titulo: 'Corujão de jogos',
           desc: 'Jogos digitais e de mesa; encerramento ao final',
         },

@@ -9,7 +9,7 @@ import { NewBadge } from '@/components/web90s/Enfeites';
 import { ICONES_TIPO, PROGRAMACAO, TIPOS } from '@/data/programacao';
 import type { Dia, Programacao } from '@/data/types';
 import { useNow } from '@/hooks/useNow';
-import { hrefPalestra } from '@/lib/event';
+import { getPalestra, hrefPalestra, inscricaoAtividade } from '@/lib/event';
 import { duracao, emBrasilia, hojeEmBrasilia } from '@/lib/format';
 
 /**
@@ -83,6 +83,11 @@ function PainelDia({ dia, agora }: { dia: Dia; agora: Date | null }) {
               : agora >= fim
                 ? 'is-past'
                 : '';
+          const inscricao = it.palestra
+            ? getPalestra(it.palestra).inscricaoUrl
+            : it.inscricao
+              ? inscricaoAtividade(it.inscricao)
+              : undefined;
           const cls = ['sch-item', `is-${it.tipo}`, estado, it.aDefinir && 'is-tbd']
             .filter(Boolean)
             .join(' ');
@@ -116,6 +121,17 @@ function PainelDia({ dia, agora }: { dia: Dia; agora: Date | null }) {
                   </h4>
                   <p>{it.desc}</p>
                   {it.quem ? <p className="sch-who">{it.quem}</p> : null}
+                  {inscricao ? (
+                    <a
+                      href={inscricao}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="site-signup sch-signup"
+                      aria-label={`Inscrever-se em ${it.titulo} (abre o formulário em nova aba)`}
+                    >
+                      Inscrever-se
+                    </a>
+                  ) : null}
                 </div>
                 <div className="sch-meta">
                   <span className="sch-kind">{TIPOS[it.tipo]}</span>
