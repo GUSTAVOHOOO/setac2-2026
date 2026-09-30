@@ -6,6 +6,7 @@ import {
   useCallback,
   useContext,
   useEffect,
+  useLayoutEffect,
   useMemo,
   useRef,
   useState,
@@ -13,6 +14,7 @@ import {
   type ReactNode,
 } from 'react';
 import { useOsMode } from '@/hooks/useOsMode';
+import { hourglass, paintIn, rectOf, zoomRect, type Rect } from '@/lib/motion';
 import { appFor, type OsApp } from './apps';
 import { FrameContext, type FrameControls } from './frame-context';
 
@@ -25,6 +27,8 @@ interface OsWindow {
   max: boolean;
   x: number;
   y: number;
+  /** De onde a janela "saiu" (ícone, item do menu, botão): origem do zoom de abertura. */
+  from?: Rect;
 }
 
 export interface OsTask {
@@ -52,6 +56,8 @@ function splitHref(href: string) {
   return i < 0 ? { path: href, hash: '' } : { path: href.slice(0, i), hash: href.slice(i) };
 }
 
+const sel = (attr: string, key: string) => `[${attr}="${CSS.escape(key)}"]`;
+
 function resolve(href: string): OsApp | null {
   const { path, hash } = splitHref(href);
   return appFor(path, hash);
@@ -72,7 +78,7 @@ export function OsProvider({ children }: { children: ReactNode }) {
   const zTop = useRef(0);
   const abertas = useRef(0);
 
-  const open = useCallback((href: string) => {
+  const open = useCallback((href: string, from?: Rect | null) => {
     const app = resolve(href);
     if (!app) return;
     const z = ++zTop.current;
@@ -81,6 +87,7 @@ export function OsProvider({ children }: { children: ReactNode }) {
       if (atual) {
         return ws.map((w) => (w.key === app.key ? { ...w, href, z, min: false } : w));
       }
+      hourglass();
       // Cascata como no 98: a primeira à direita dos ícones do desktop, as seguintes um pouco
       // abaixo e à direita da anterior.
       const n = abertas.current++ % 8;
@@ -88,7 +95,16 @@ export function OsProvider({ children }: { children: ReactNode }) {
       const x0 = icones ? Math.round(icones.right) + 24 : 120;
       return [
         ...ws,
-        { key: app.key, href, z, min: false, max: false, x: x0 + n * 28, y: 16 + n * 28 },
+        {
+          key: app.key,
+          href,
+          z,
+          min: false,
+          max: false,
+          x: x0 + n * 28,
+          y: 16 + n * 28,
+          from: from ?? undefined,
+        },
       ];
     });
   }, []);
@@ -110,6 +126,17 @@ export function OsProvider({ children }: { children: ReactNode }) {
     setWins((ws) => ws.filter((w) => w.key !== key));
   }, []);
 
+  // Minimizar: a janela some e o contorno da barra de título voa até o botão na barra de tarefas.
+  const minimize = useCallback(
+    (key: string) => {
+      const from = rectOf(document.querySelector(`.os-frame${sel('data-key', key)}`));
+      const to = rectOf(document.querySelector(sel('data-task', key)));
+      patch(key, { min: true });
+      if (from && to) void zoomRect(from, to);
+    },
+    [patch],
+  );
+
   // Janela ativa = a mais alta que não está minimizada.
   const activeKey = useMemo(
     () => wins.filter((w) => !w.min).sort((a, b) => b.z - a.z)[0]?.key,
@@ -130,7 +157,8 @@ export function OsProvider({ children }: { children: ReactNode }) {
       const href = url.pathname + url.hash;
       if (!resolve(href)) return;
       e.preventDefault();
-      open(href);
+      // Ícones abrem a partir da figura; o resto, a partir do próprio link.
+      open(href, rectOf(a.querySelector('img') ?? a) ?? rectOf(a));
     };
     window.addEventListener('click', onClick, true);
     return () => window.removeEventListener('click', onClick, true);
@@ -163,10 +191,10 @@ export function OsProvider({ children }: { children: ReactNode }) {
     (key: string) => {
       const w = wins.find((x) => x.key === key);
       if (!w) return;
-      if (key === activeKey) patch(key, { min: true });
+      if (key === activeKey) minimize(key);
       else focus(key);
     },
-    [wins, activeKey, patch, focus],
+    [wins, activeKey, minimize, focus],
   );
 
   const tasks = useMemo<OsTask[]>(
@@ -197,6 +225,7 @@ export function OsProvider({ children }: { children: ReactNode }) {
                 active={w.key === activeKey}
                 onFocus={focus}
                 onClose={close}
+                onMinimize={minimize}
                 onPatch={patch}
               />
             ) : null;
@@ -213,6 +242,7 @@ function OsFrame({
   active,
   onFocus,
   onClose,
+  onMinimize,
   onPatch,
 }: {
   win: OsWindow;
@@ -220,10 +250,32 @@ function OsFrame({
   active: boolean;
   onFocus: (key: string) => void;
   onClose: (key: string) => void;
+  onMinimize: (key: string) => void;
   onPatch: (key: string, p: Partial<OsWindow>) => void;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const { key } = win;
+
+  // Zoom de entrada: ao abrir (do ícone), ao voltar da barra de tarefas e ao maximizar/restaurar.
+  // A janela fica invisível enquanto o contorno voa e depois é "pintada" de cima para baixo.
+  const zoomFrom = useRef<Rect | null>(win.from ?? null);
+  const wasMin = useRef(win.min);
+  useLayoutEffect(() => {
+    let from = zoomFrom.current;
+    zoomFrom.current = null;
+    if (wasMin.current && !win.min) {
+      from = rectOf(document.querySelector(sel('data-task', key)));
+    }
+    wasMin.current = win.min;
+    const el = ref.current;
+    const to = rectOf(el);
+    if (!from || !el || !to || win.min) return;
+    el.style.visibility = 'hidden';
+    void zoomRect(from, to).then(() => {
+      el.style.removeProperty('visibility');
+      paintIn(el, { duration: 110, frames: 4 });
+    });
+  }, [win.min, win.max, key]);
 
   // Leva o foco do teclado para a janela quando ela abre ou volta da barra de tarefas.
   useEffect(() => {
@@ -272,17 +324,21 @@ function OsFrame({
       active,
       maximized: win.max,
       onClose: () => onClose(key),
-      onMinimize: () => onPatch(key, { min: true }),
-      onToggleMaximize: () => onPatch(key, { max: !win.max }),
+      onMinimize: () => onMinimize(key),
+      onToggleMaximize: () => {
+        zoomFrom.current = rectOf(ref.current);
+        onPatch(key, { max: !win.max });
+      },
       onTitlePointerDown,
     }),
-    [active, win.max, key, onClose, onPatch, onTitlePointerDown],
+    [active, win.max, key, onClose, onMinimize, onPatch, onTitlePointerDown],
   );
 
   return (
     <div
       ref={ref}
       className={['os-frame', win.max && 'is-max'].filter(Boolean).join(' ')}
+      data-key={key}
       style={
         win.max
           ? { zIndex: win.z }

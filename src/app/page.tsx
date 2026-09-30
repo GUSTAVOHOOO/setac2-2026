@@ -62,8 +62,13 @@ export default function Home() {
               de jogos na UTFPR Santa Helena.
             </p>
             <p style={{ margin: 0 }}>
-              Abra os ícones do lado, ou use o menu Iniciar lá embaixo. Ou clique em qualquer coisa,
-              a gente não julga.
+              <span className="site-only-wide">
+                Abra os ícones do lado, ou use o menu Iniciar lá embaixo.
+              </span>
+              <span className="site-only-narrow">
+                Toque em Iniciar, lá embaixo, para abrir tudo.
+              </span>{' '}
+              Ou clique em qualquer coisa, a gente não julga.
             </p>
           </Window>
 

@@ -5,10 +5,14 @@ import { Taskbar } from '@/components/win98/Taskbar';
 import { SITE } from '@/lib/site';
 import { BootScreen } from '@/components/boot/BootScreen';
 import { bootBootstrap } from '@/components/boot/bootstrap';
+import { cmdBootstrap } from '@/components/event/cmd-bootstrap';
+import { Motion } from '@/components/motion/Motion';
+import { Screensaver } from '@/components/motion/Screensaver';
 import '@/styles/tokens.css';
 import '@/styles/bundle.css';
 import '@/styles/site.css';
 import '@/styles/boot.css';
+import '@/styles/motion.css';
 
 /* As fontes viram as variáveis --font-pixelify / --font-vt323, ligadas aos tokens em site.css. */
 const pixelify = Pixelify_Sans({
@@ -61,6 +65,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: bootBootstrap }} />
+        <script dangerouslySetInnerHTML={{ __html: cmdBootstrap }} />
       </head>
       <body className="w98 w98-desktop">
         <a className="site-skip" href="#conteudo">
@@ -71,7 +76,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             {children}
           </main>
           <Taskbar />
+          <Motion />
         </OsProvider>
+        <Screensaver />
         <BootScreen />
       </body>
     </html>

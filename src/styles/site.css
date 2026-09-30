@@ -640,3 +640,61 @@ html[data-os] .os-hide {
     monospace;
   color: var(--ink);
 }
+
+/*
+ * ---------- Celular: responsividade ----------
+ * Sem a grade de ícones em cima da hero (o menu Iniciar e os atalhos já levam a tudo).
+ * Textos que falam "dos ícones ao lado" trocam por uma versão para toque.
+ */
+.site-only-narrow {
+  display: none;
+}
+@media (max-width: 640px) {
+  .site-only-wide {
+    display: none;
+  }
+  .site-only-narrow {
+    display: inline;
+  }
+  .site-home .site-desktop .w98-icongrid {
+    display: none;
+  }
+  .site-home .site-desktop {
+    gap: 0;
+  }
+
+  /* CMD: logo em ASCII menor (não ocupa a tela toda) e texto que quebra em vez de vazar. */
+  .site-cmd-screen {
+    font-size: 17px;
+  }
+  .site-cmd-logo {
+    font-size: min(calc(92cqi / 33.2), 10px);
+  }
+  .site-cmd-info {
+    font-size: 17px;
+    overflow-wrap: anywhere;
+  }
+  .site-cmd-info dl > div {
+    flex-wrap: wrap;
+    column-gap: 0.4em;
+  }
+  .site-cmd-live {
+    font-size: 19px;
+  }
+
+  /* Atalhos: o principal em cima, os outros dois lado a lado. */
+  .site-hero-ctas {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .site-hero-ctas > .w98-btn:first-child {
+    grid-column: 1 / -1;
+  }
+
+  /* Nomes de arquivo compridos (Lixeira, listas) quebram em vez de sair da janela. */
+  .w98-list td,
+  .w98-list-link {
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+}

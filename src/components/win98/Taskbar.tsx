@@ -77,6 +77,7 @@ export function Taskbar() {
           os.tasks.map((t) => (
             <button
               key={t.key}
+              data-task={t.key}
               type="button"
               className={['w98-task', t.active && 'is-active'].filter(Boolean).join(' ')}
               aria-pressed={t.active}

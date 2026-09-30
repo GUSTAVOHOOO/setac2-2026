@@ -1,19 +1,27 @@
+import type { ReactNode } from 'react';
 import { DraggableWindow } from '@/components/win98/DraggableWindow';
 import { INICIO_EVENTO } from '@/data/programacao';
 import { LOGO_ASCII } from '@/data/logo-ascii';
+import { CmdScreen } from './CmdScreen';
 import { Countdown } from './Countdown';
 
 const PROMPT = 'C:\\SETAC2>';
 
 /** Linhas do "setac2 --info", no estilo neofetch: chave em dourado, valor em cinza. */
-const INFO: [string, string][] = [
+const INFO: [string, ReactNode][] = [
   ['Evento', 'XIII Semana Tecnológica Acadêmica'],
   ['Curso', 'Ciência da Computação'],
   ['Data', '05 e 06 de outubro de 2026'],
   ['Local', 'UTFPR Santa Helena'],
   ['Programa', 'palestras, minicursos, competição de programação e corujão de jogos'],
   ['Inscrição', 'uma por atividade, pelo Google Forms'],
-  ['Dica', 'abra os ícones ao lado ou o menu Iniciar'],
+  [
+    'Dica',
+    <>
+      <span className="site-only-wide">abra os ícones ao lado ou o menu Iniciar</span>
+      <span className="site-only-narrow">toque em Iniciar, lá embaixo</span>
+    </>,
+  ],
 ];
 
 /** Blocos de cor do fim do neofetch: a paleta da marca + as VGA de tempero. */
@@ -43,7 +51,7 @@ export function Hero() {
       icon="/marca/setac2-pixel.svg"
       body={false}
     >
-      <div className="site-cmd-screen">
+      <CmdScreen>
         <h1 className="sr-only">
           Setac² 2026 · XIII Semana Tecnológica Acadêmica de Ciência da Computação
         </h1>
@@ -52,7 +60,9 @@ export function Hero() {
           <br />
           (C) UTFPR Santa Helena. Todos os bugs reservados.
         </p>
-        <p>{PROMPT} setac2 --info</p>
+        <p className="site-cmd-prompt">
+          {PROMPT} <span className="site-cmd-cmd">setac2 --info</span>
+        </p>
         <div className="site-cmd-fetch">
           <pre className="site-cmd-logo" aria-hidden="true">
             {LOGO_ASCII}
@@ -80,7 +90,7 @@ export function Hero() {
           <Countdown alvo={INICIO_EVENTO} prefixo={`${PROMPT} faltam `} />
           <span className="site-cmd-cursor" aria-hidden="true" />
         </p>
-      </div>
+      </CmdScreen>
     </DraggableWindow>
   );
 }

@@ -1,0 +1,127 @@
+/*
+ * Setac² 2026 — movimento no ritmo do Windows 98.
+ * Regra da casa: nada de fade longo, escala ou easing "de app moderno". O 98 redesenha em
+ * degraus (steps): menus deslizam aos trancos, a barra de título voa, janelas são pintadas
+ * de cima para baixo. Tudo some com "reduzir movimento".
+ */
+
+/* Zoom rect: a barra de título em degradê voando entre dois pontos (src/lib/motion.ts). */
+.w98-zoomrect {
+  position: fixed;
+  z-index: calc(var(--z-taskbar) + 2);
+  box-sizing: border-box;
+  background: linear-gradient(90deg, var(--title), var(--title-end));
+  border: 1px solid var(--face);
+  box-shadow: 1px 1px 0 var(--frame);
+  pointer-events: none;
+}
+
+/* Ampulheta enquanto o "programa carrega". */
+html[data-busy],
+html[data-busy] * {
+  cursor:
+    url('/cursors/ampulheta.svg') 12 12,
+    progress !important;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Esperando a vez de ser pintado (entra quando rola até ele). */
+  [data-motion='wait'] {
+    visibility: hidden;
+  }
+
+  /* Prompt da hero: a saída fica escondida até o comando ser "digitado". */
+  html[data-cmd-type] .site-cmd-screen > * {
+    visibility: hidden;
+  }
+
+  /* Menu Iniciar desliza de dentro da barra de tarefas, aos trancos. */
+  .site-startmenu:not([hidden]) {
+    animation: w98-slide-up 180ms steps(6, jump-end) both;
+  }
+
+  /* Botão novo na barra de tarefas é desenhado da esquerda para a direita. */
+  .w98-taskbar .w98-task {
+    animation: w98-paint-left 120ms steps(4, jump-end) both;
+  }
+
+  /* Trocou de aba ou de slide: o painel é redesenhado. */
+  .w98-tabpanel:not([hidden]),
+  .w98-paint {
+    animation: w98-paint-down 150ms steps(5, jump-end) both;
+  }
+
+  /* Balão de dica aparece "esmaecendo", como no 98 com efeitos visuais ligados. */
+  .w98-tooltip {
+    animation: w98-fade 200ms steps(4, jump-end) both;
+  }
+}
+
+@keyframes w98-slide-up {
+  from {
+    transform: translateY(100%);
+    clip-path: inset(0 0 100% 0);
+  }
+  to {
+    transform: none;
+    clip-path: inset(0);
+  }
+}
+@keyframes w98-paint-left {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0);
+  }
+}
+@keyframes w98-paint-down {
+  from {
+    clip-path: inset(0 0 100% 0);
+  }
+  to {
+    clip-path: inset(0);
+  }
+}
+@keyframes w98-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Ícone do desktop "selecionado" no instante do clique/toque, como no Explorer. */
+.w98-icon:active span {
+  background: var(--select);
+  color: var(--select-ink);
+  outline: 1px dotted var(--hype);
+}
+.w98-icon:active img {
+  filter: brightness(0.6) sepia(1) hue-rotate(190deg) saturate(4);
+}
+
+/* Toque em item de menu/lista acende a seleção azul na hora (no celular não há hover). */
+@media (hover: none) {
+  .w98-list tbody tr:active td,
+  .w98-list tbody tr:active td.muted,
+  .sch-item:not(.is-now):active {
+    background: var(--select);
+    color: var(--select-ink);
+  }
+}
+
+/* Proteção de tela. */
+.site-screensaver {
+  position: fixed;
+  inset: 0;
+  z-index: calc(var(--z-taskbar) + 10);
+  background: #000;
+  cursor: none;
+}
+.site-screensaver canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}

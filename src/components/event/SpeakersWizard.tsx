@@ -84,7 +84,8 @@ export function SpeakersWizard({
       onKeyDown={onKeyDown}
     >
       <div
-        className="spk-stage"
+        key={s.id}
+        className="spk-stage w98-paint"
         id={`${uid}-stage`}
         aria-live="polite"
         aria-roledescription="slide"
