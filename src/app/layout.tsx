@@ -13,6 +13,7 @@ import '@/styles/bundle.css';
 import '@/styles/site.css';
 import '@/styles/boot.css';
 import '@/styles/motion.css';
+import '@/styles/bonzi.css';
 
 /* As fontes viram as variáveis --font-pixelify / --font-vt323, ligadas aos tokens em site.css. */
 const pixelify = Pixelify_Sans({

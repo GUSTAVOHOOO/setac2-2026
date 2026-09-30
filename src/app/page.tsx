@@ -1,4 +1,5 @@
 import { Hero } from '@/components/event/Hero';
+import { BonziLauncher } from '@/components/bonzi/BonziLauncher';
 import { InscricaoWindow } from '@/components/event/InscricaoWindow';
 import { Marquee } from '@/components/web90s/Marquee';
 import { ButtonLink } from '@/components/win98/Button';
@@ -27,6 +28,7 @@ export default function Home() {
           ))}
           {/* Todo desktop que se preze tem uma. */}
           <DesktopIcon href="/lixeira" icon="/icons/lixeira.svg" label="Lixeira" />
+          <BonziLauncher />
         </IconGrid>
 
         <div className="site-windows">
