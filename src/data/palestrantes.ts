@@ -50,7 +50,7 @@ export const PALESTRANTES: Record<string, Palestrante> = {
   },
   'welington-ferreira': {
     nome: 'Welington Ferreira',
-    bio: [],
+    bio: ['Mestrando em Computação Aplicada'],
     palestra: 'aws',
     foto: '/palestrantes/welington-ferreira.jpg',
   },
