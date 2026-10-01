@@ -72,7 +72,7 @@ export const PALESTRAS: Record<PalestraId, Palestra> = {
     chamada:
       'Quer começar na computação em nuvem e sair com um caminho claro para a primeira certificação AWS?',
     resumo: [
-      'Neste minicurso de 2h30, Gabriel e Welington apresentam tudo o que cai na prova AWS Certified Cloud Practitioner, seguindo os quatro domínios do exame: conceitos de cloud computing; segurança e controle de acesso (IAM, modelo de responsabilidade compartilhada); infraestrutura global e principais serviços (EC2, S3, Lambda, RDS, DynamoDB); e preços, cobrança e planos de suporte.',
+      'Neste minicurso de 2h30, Gabriel e Wellington apresentam tudo o que cai na prova AWS Certified Cloud Practitioner, seguindo os quatro domínios do exame: conceitos de cloud computing; segurança e controle de acesso (IAM, modelo de responsabilidade compartilhada); infraestrutura global e principais serviços (EC2, S3, Lambda, RDS, DynamoDB); e preços, cobrança e planos de suporte.',
       'O Gabriel, que já é certificado, também conta como foi a preparação dele, quais materiais usou e como eliminar as alternativas erradas nas questões de cenário. No final, a turma resolve algumas questões no estilo oficial.',
       'Voltado a estudantes de TI. Não precisa ter experiência prévia com AWS.',
     ],

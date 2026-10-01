@@ -90,7 +90,7 @@ export const PROGRAMACAO: Programacao = {
           palestra: 'aws',
           titulo: 'Minicurso 1',
           desc: 'Preparatório AWS Cloud Practitioner (CLF-C02)',
-          quem: 'Gabriel Lima Scheffler e Welington Ferreira',
+          quem: 'Gabriel Lima Scheffler e Wellington Ferreira',
         },
         {
           periodo: 'Tarde',

@@ -49,8 +49,12 @@ export const PALESTRANTES: Record<string, Palestrante> = {
     foto: '/palestrantes/gabriel-scheffler.jpg',
   },
   'welington-ferreira': {
-    nome: 'Welington Ferreira',
-    bio: ['Mestrando em Computação Aplicada'],
+    nome: 'Wellington Ferreira',
+    bio: [
+      'Engenheiro de Software no LAMIA, UTFPR Santa Helena',
+      'Mestrando em Computação Aplicada (Engenharia de Software), UTFPR',
+      'Professor de Interação Humano-Computador na UTFPR',
+    ],
     palestra: 'aws',
     foto: '/palestrantes/welington-ferreira.jpg',
   },
