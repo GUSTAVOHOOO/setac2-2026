@@ -12,6 +12,7 @@ export interface SpeakerSlide {
   nome: string;
   bio: string[];
   foto?: string;
+  linkedin?: string;
   palestra?: {
     href: string;
     rotulo: string;
@@ -105,6 +106,17 @@ export function SpeakersWizard({
           ) : (
             <p className="spk-bio">Mini bio em breve.</p>
           )}
+          {s.linkedin ? (
+            <ButtonLink
+              href={s.linkedin}
+              external
+              icon="/icons/globo.svg"
+              className="spk-linkedin"
+              aria-label={`LinkedIn de ${s.nome} (abre em nova aba)`}
+            >
+              LinkedIn
+            </ButtonLink>
+          ) : null}
           {s.palestra ? (
             <div className="spk-talk">
               <span className="talk-kind">{s.palestra.rotulo}</span>

@@ -13,6 +13,7 @@ export function speakerSlides(): SpeakerSlide[] {
       nome: p.nome,
       bio: p.bio,
       foto: p.foto,
+      linkedin: p.linkedin,
       palestra: t
         ? {
             href: hrefPalestra(t.id),

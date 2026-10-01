@@ -43,6 +43,8 @@ export interface Palestrante {
   palestra?: PalestraId;
   /** Caminho em /public (ex.: '/palestrantes/daniel-costa.jpg'). Sem foto: iniciais. */
   foto?: string;
+  /** Perfil público no LinkedIn (URL completa). Sem link: o botão não aparece. */
+  linkedin?: string;
 }
 
 export interface Palestra {

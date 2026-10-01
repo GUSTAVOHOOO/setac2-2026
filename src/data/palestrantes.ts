@@ -10,12 +10,14 @@ export const PALESTRANTES: Record<string, Palestrante> = {
     bio: ['Mestre em Sistemas de Informação, UPB, Portugal', 'Ciência da Computação, UTFPR-SH'],
     palestra: 'erasmus',
     foto: '/palestrantes/daniel-costa.jpg',
+    linkedin: 'https://www.linkedin.com/in/danieltheisges/',
   },
   'adrieli-ritt': {
     nome: 'Adrieli Luisa Ritt',
     bio: ['Doutoranda na University of Florida', 'Mestre em Sustentabilidade, UTFPR-SH'],
     palestra: 'erasmus',
     foto: '/palestrantes/adrieli-ritt.jpg',
+    linkedin: 'https://www.linkedin.com/in/adrieli-luisa-ritt-8baa11206/',
   },
   'leticia-remonti': {
     nome: 'Leticia Remonti',
@@ -33,6 +35,7 @@ export const PALESTRANTES: Record<string, Palestrante> = {
     ],
     palestra: 'cyber-veiculos',
     foto: '/palestrantes/isadora-ferrao.jpg',
+    linkedin: 'https://www.linkedin.com/in/isadora-ferrao/',
   },
   'gustavo-quieregato': {
     nome: 'Gustavo Silva Quieregato',
@@ -43,12 +46,14 @@ export const PALESTRANTES: Record<string, Palestrante> = {
     ],
     palestra: 'mercado',
     foto: '/palestrantes/gustavo-quieregato.jpg',
+    linkedin: 'https://www.linkedin.com/in/gustavo-silva-quieregato/',
   },
   'gabriel-scheffler': {
     nome: 'Gabriel Lima Scheffler',
     bio: ['Certificado AWS Cloud Practitioner'],
     palestra: 'aws',
     foto: '/palestrantes/gabriel-scheffler.jpg',
+    linkedin: 'https://www.linkedin.com/in/gabriel-scheffler-781394247/',
   },
   'welington-ferreira': {
     nome: 'Wellington Ferreira',
@@ -59,6 +64,7 @@ export const PALESTRANTES: Record<string, Palestrante> = {
     ],
     palestra: 'aws',
     foto: '/palestrantes/welington-ferreira.jpg',
+    linkedin: 'https://www.linkedin.com/in/wellingtondesf/',
   },
 };
 
