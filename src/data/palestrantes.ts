@@ -21,7 +21,11 @@ export const PALESTRANTES: Record<string, Palestrante> = {
   },
   'leticia-remonti': {
     nome: 'Leticia Remonti',
-    bio: ['Advogada'],
+    bio: [
+      'Jurista',
+      'Graduada em Direito pela PUCPR',
+      'Pós-graduada em Direito Penal e Criminologia pela PUCRS',
+    ],
     palestra: 'direito-digital',
     foto: '/palestrantes/leticia-remonti.jpg',
   },

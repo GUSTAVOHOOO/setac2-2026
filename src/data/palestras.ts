@@ -17,7 +17,8 @@ export const PALESTRAS: Record<PalestraId, Palestra> = {
     local: 'Auditório Daniel Blanco',
     palestrantes: ['leticia-remonti'],
     resumo: [
-      'O que a lei diz sobre o que a gente desenvolve? A advogada Leticia Remonti fala sobre direito digital aplicado à computação: patentes e propriedade intelectual de software, proteção de dados e da presença digital, crimes cibernéticos e a responsabilidade legal de quem cria e mantém sistemas.',
+      'Aquele print salva você num processo? Depende. A jurista Leticia Remonti fala sobre o que acontece quando a internet vira caso de justiça.',
+      'Fake news e desinformação: impacto social e responsabilidade de desenvolvedores e plataformas. Calúnia, difamação e injúria na web: distinções legais e provas digitais (print screen, ata notarial ou blockchain). E casos práticos envolvendo redes sociais e fóruns.',
     ],
   },
   'cyber-veiculos': {

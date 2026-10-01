@@ -62,7 +62,7 @@ export const PROGRAMACAO: Programacao = {
           palestra: 'direito-digital',
           titulo: 'Palestra de abertura',
           desc: 'Direito Digital, Crimes Cibernéticos e Responsabilidade Legal na Computação',
-          quem: 'Advogada Leticia Remonti',
+          quem: 'Jurista Leticia Remonti',
         },
         {
           periodo: 'Manhã',
