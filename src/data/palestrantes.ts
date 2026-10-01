@@ -32,6 +32,7 @@ export const PALESTRANTES: Record<string, Palestrante> = {
       'Pesquisa safety e security em veículos aéreos autônomos',
     ],
     palestra: 'cyber-veiculos',
+    foto: '/palestrantes/isadora-ferrao.jpg',
   },
   'gustavo-quieregato': {
     nome: 'Gustavo Silva Quieregato',
@@ -41,6 +42,7 @@ export const PALESTRANTES: Record<string, Palestrante> = {
       'Aluno do programa de Dupla Diplomação',
     ],
     palestra: 'mercado',
+    foto: '/palestrantes/gustavo-quieregato.jpg',
   },
   'gabriel-scheffler': {
     nome: 'Gabriel Lima Scheffler',
