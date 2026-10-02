@@ -19,8 +19,7 @@ export const INSCRICOES: Record<PalestraId, string | undefined> = {
 
   // Minicursos
   aws: 'https://forms.gle/J7p4Uh49yLVGmUVm8',
-  // A definir: formulário pronto (https://forms.gle/97cAe3KA1jGADMxx7), abre quando o tema sair.
-  'minicurso-2': undefined,
+  'minicurso-2': 'https://forms.gle/97cAe3KA1jGADMxx7',
 };
 
 /** Atividades da programação sem card (campo `inscricao` em `programacao.ts`). */

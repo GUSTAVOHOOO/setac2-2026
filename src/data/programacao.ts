@@ -162,12 +162,12 @@ export const PROGRAMACAO: Programacao = {
         {
           periodo: 'Tarde',
           inicio: '14:30',
-          fim: '16:00',
+          fim: '16:15',
           tipo: 'minicurso',
           palestra: 'minicurso-2',
           titulo: 'Minicurso 2',
-          desc: 'Tema e ministrante a definir',
-          aDefinir: true,
+          desc: 'LLMs e agentes de IA na prática',
+          quem: 'Gustavo Mazur e Jorge Camargo',
         },
         {
           periodo: 'Tarde',
