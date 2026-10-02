@@ -140,6 +140,7 @@ export function BootScreen() {
         </span>
         <Button onClick={() => finishRef.current()}>Pular abertura</Button>
       </div>
+      <div className="crt-overlay" aria-hidden="true" />
     </dialog>
   );
 }

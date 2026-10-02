@@ -200,7 +200,7 @@ test('ten reopen cycles, underlying apps, and home navigation cleanup', async ({
   await launcher.click();
   await expect(bonzi).toBeVisible();
   await page.getByRole('link', { name: 'Programação.exe', exact: true }).click();
-  await expect(page.locator('.os-frame')).toBeVisible();
+  await expect(page.locator('.os-frame[data-key="programacao"]')).toBeVisible();
   await page
     .getByRole('navigation', { name: 'Área de trabalho' })
     .getByRole('link', { name: 'Inscrição.txt', exact: true })

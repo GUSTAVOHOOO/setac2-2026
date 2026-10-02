@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { BONZI_HASH, BONZI_OPEN_EVENT } from '@/components/bonzi/events';
+import { CrtToggle } from '@/components/crt/CrtToggle';
 import type { NavItem } from '@/lib/site';
 import { Atalho } from './Atalho';
 import { PixelIcon } from './PixelIcon';
@@ -61,6 +62,9 @@ export function StartMenu({
           })}
           <li className="site-startmenu-sep" aria-hidden="true">
             <hr />
+          </li>
+          <li>
+            <CrtToggle />
           </li>
           <li>
             {/* Na home abre na hora; de outra página, volta para a home já com ele. */}

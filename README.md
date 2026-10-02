@@ -34,12 +34,16 @@ antiga, como o marquee.
   menu Iniciar como navegação.
 - **Hero em prompt de comando.** A logo em ASCII, as informações do evento no estilo neofetch e
   uma contagem regressiva no prompt.
+- **Monitor CRT.** Textura RGB, linhas de varredura e bordas levemente escurecidas, inclusive na
+  abertura do Windows. O efeito é estático e pode ser desligado no menu Iniciar.
+- **Protetor de tela.** Estrelas e logos da Setac² aparecem depois de um minuto sem interação no PC.
 - **Programação ao vivo.** Abas por dia; durante o evento, a atividade em andamento ganha o selo
   AGORA.
 - **Inscrição por atividade.** Cada palestra e minicurso tem seu link do Google Forms, configurado
   em um arquivo só.
 - **Tudo estático.** As páginas são geradas no build, com metadata e imagem de compartilhamento
-  próprias, e cada atividade tem sua URL (`/palestras/erasmus`, `/minicursos/aws`...).
+  próprias, e cada palestra e minicurso tem sua URL (`/palestras/erasmus`, `/minicursos/aws`,
+  `/minicursos/minicurso-2`...).
 - **Lixeira no desktop**, com os arquivos que todo aluno de Computação já apagou. Não tente
   esvaziar.
 - **404 em tela azul**, claro.
@@ -57,20 +61,23 @@ npm run dev
 
 Abra http://localhost:3000.
 
-| Script              | O que faz                                             |
-| ------------------- | ----------------------------------------------------- |
-| `npm run dev`       | Servidor de desenvolvimento                           |
-| `npm run build`     | Build de produção (todas as páginas estáticas)        |
-| `npm run start`     | Sobe o build de produção                              |
-| `npm run lint`      | ESLint (`lint:fix` corrige o que der)                 |
-| `npm run format`    | Prettier em tudo (`format:check` só confere)          |
-| `npm run typecheck` | Gera os tipos das rotas (`next typegen`) e roda `tsc` |
+| Script               | O que faz                                                                |
+| -------------------- | ------------------------------------------------------------------------ |
+| `npm run dev`        | Servidor de desenvolvimento                                              |
+| `npm run build`      | Build de produção (todas as páginas estáticas)                           |
+| `npm run start`      | Sobe o build de produção                                                 |
+| `npm run lint`       | ESLint (`lint:fix` corrige o que der)                                    |
+| `npm run format`     | Prettier em tudo (`format:check` só confere)                             |
+| `npm run typecheck`  | Gera os tipos das rotas (`next typegen`) e roda `tsc`                    |
+| `npm run test:bonzi` | Testes unitários do comportamento do BonziBuddy                          |
+| `npm run test:e2e`   | Testes de navegador e capturas do Bonzi e do CRT; exige build atualizado |
 
 ## Editando o conteúdo
 
 ### Links de inscrição
 
-Tudo em **`src/data/inscricoes.ts`**. Troque o `undefined` pelo link do formulário:
+Tudo em **`src/data/inscricoes.ts`**. Edite os links dos formulários; use `undefined` quando a
+inscrição ainda não estiver disponível:
 
 ```ts
 export const INSCRICOES: Record<PalestraId, string | undefined> = {
@@ -81,24 +88,33 @@ export const INSCRICOES: Record<PalestraId, string | undefined> = {
 ```
 
 Com link, o card mostra **Inscrever-se** (abre em nova aba); sem link, mostra
-**Inscrições em breve**. Só links `https://` valem, e atividade marcada `aDefinir: true` fica
-"em breve" mesmo com link.
+**Inscrições em breve**. Só links `https://` valem. A marca `aDefinir: true` exibe o selo
+"A DEFINIR", mas não impede a inscrição quando há um link válido.
+
+Palestras e minicursos usam `INSCRICOES`; a competição e o corujão de jogos usam
+`INSCRICOES_ATIVIDADES`, no mesmo arquivo.
 
 ### Dados do evento
 
-Tudo em `src/data/`, e o site inteiro acompanha:
+Programação, palestras e palestrantes ficam em `src/data/`, e o site inteiro acompanha:
 
-| Arquivo           | O que tem                                                                               |
-| ----------------- | --------------------------------------------------------------------------------------- |
-| `programacao.ts`  | Programação por dia e `INICIO_EVENTO` (alvo da contagem regressiva)                     |
-| `palestras.ts`    | Palestras e minicursos: título, resumo, data, horário, local, palestrantes              |
-| `palestrantes.ts` | Nome, mini bio e foto (`public/palestrantes/<id>.jpg`, retrato 4:5; sem foto, iniciais) |
-| `types.ts`        | Tipos e a lista `PALESTRA_IDS`                                                          |
-| `logo-ascii.ts`   | A logo em ASCII do prompt da hero                                                       |
-| `lixeira.ts`      | Os arquivos zoados da Lixeira (cada um abre no Bloco de Notas)                          |
+| Arquivo           | O que tem                                                                                         |
+| ----------------- | ------------------------------------------------------------------------------------------------- |
+| `programacao.ts`  | Programação por dia e `INICIO_EVENTO` (alvo da contagem regressiva)                               |
+| `palestras.ts`    | Palestras e minicursos: título, resumo, data, horário, local, palestrantes                        |
+| `palestrantes.ts` | Nome, mini bio, LinkedIn opcional e caminho da foto em `public/palestrantes/`; sem foto, iniciais |
+| `types.ts`        | Tipos e a lista `PALESTRA_IDS`                                                                    |
+| `logo-ascii.ts`   | A logo em ASCII do prompt da hero                                                                 |
+| `lixeira.ts`      | Os arquivos zoados da Lixeira (cada um abre no Bloco de Notas)                                    |
 
 **Atividade nova:** adicione o id em `PALESTRA_IDS`, a entrada em `palestras.ts` e o slot em
 `inscricoes.ts` (o TypeScript avisa se faltar algum). A página dela é criada sozinha no build.
+
+O minicurso **LLMs e agentes de IA na prática**, de Gustavo Mazur e Jorge Camargo, usa o id
+`minicurso-2` e a rota `/minicursos/minicurso-2`. Seus dados seguem o mesmo fluxo dos demais
+minicursos. As fotos podem ser JPG ou PNG; prefira retratos 4:5 e informe o caminho em `foto`.
+
+Nome do evento, URL pública e itens de navegação ficam em `src/lib/site.ts`.
 
 ## Como o código está organizado
 
@@ -106,6 +122,10 @@ Tudo em `src/data/`, e o site inteiro acompanha:
 src/
   app/            rotas (App Router): /, /programacao, /palestras, /minicursos, /palestrantes, 404
   components/
+    boot/         abertura Windows 98 e montagem do desktop
+    bonzi/        personagem, falas, sprites e regras de movimento
+    crt/          preferência do monitor e controle no menu Iniciar
+    motion/       animações das janelas e protetor de tela
     os/           o "sistema": janelas pop-up, barra de tarefas, qual link abre qual janela
     win98/        Window, Button, Taskbar, StartMenu, Tabs, ListView, Terminal...
     event/        Hero (CMD), Schedule, TalkCard, SpeakersWizard, InscricaoButton...
@@ -113,8 +133,10 @@ src/
   data/           dados do evento e links de inscrição
   hooks/          relógio, contagem regressiva, arrastar, modo PC/celular
   lib/            datas, helpers de dados, metadata, navegação
-  styles/         tokens.css + bundle.css (design system) e site.css (layout do site)
-public/           ícones em pixel art, logo e fotos dos palestrantes
+  styles/         design system, layout, boot, animações, Bonzi e filtro CRT
+public/           ícones em pixel art, logos, sprites e fotos dos palestrantes
+tests/            testes Playwright de comportamento e capturas visuais
+docs/             pesquisas, especificações e planos de implementação
 ```
 
 O visual vem do design system da Setac² (classes `w98-*`, `web-*`, `sch-*`, `talk-*`, `spk-*` em
@@ -150,6 +172,34 @@ a proteção de carregamento libera o conteúdo em até 8 segundos.
 
 Pesquisa e decisões: [inicialização Windows 98](docs/research/windows-98-boot.md).
 
+## Monitor CRT
+
+O efeito começa ligado. Abra **Iniciar > Monitor CRT** para alternar entre ligado e desligado,
+sem fechar o menu. A preferência fica em `localStorage['setac2:crt']`, acompanha outras abas
+e é aplicada antes da primeira pintura. Se o navegador bloquear o armazenamento, o controle
+continua funcionando na aba, mas recarregar volta ao padrão ligado.
+
+As linhas e a máscara RGB são estáticas, sem flashes, chiado ou separação forte das cores.
+O terminal preserva o preto e a camada não intercepta cliques nem muda o arraste das janelas.
+No celular e em dispositivos de toque, a textura é mais leve. Impressão e modo de cores
+forçadas ocultam o efeito; movimento reduzido mantém a textura estática.
+
+O estilo fica em `src/styles/crt.css`, com o controle e o bootstrap em `src/components/crt/`.
+A abertura tem uma camada própria dentro do diálogo, pois ela fica acima do restante da página.
+
+Pesquisa e decisões: [design do monitor CRT](docs/superpowers/specs/2026-10-01-crt-monitor-design.md).
+Plano e verificação: [implementação do CRT](docs/superpowers/plans/2026-10-01-crt-monitor.md).
+
+## Protetor de tela
+
+No PC, após 60 segundos sem interação, estrelas e logos em pixel art da Setac² cruzam a tela.
+Movimento do mouse, clique, tecla ou rolagem fecha o protetor; o clique usado para sair não
+aciona o conteúdo por trás. Ele não aparece em telas menores que 641px, com ponteiro de toque
+ou com movimento reduzido.
+
+O comportamento fica em `src/components/motion/Screensaver.tsx`, com estilo em
+`src/styles/motion.css`.
+
 ## BonziBuddy
 
 Clique em **BonziBuddy.exe**, ao lado do terminal, para chamar o gorila roxo.
@@ -163,7 +213,13 @@ mantém a pose estática e falas por clique. Controles funcionam com teclado e t
 a animação para enquanto a aba está oculta. A arte usa os sprites históricos,
 com origem e situação da licença em [public/bonzi/README.md](public/bonzi/README.md).
 
-Para verificar o comportamento:
+Pesquisa: [BonziBuddy](docs/research/2026-09-29-bonzibuddy-research.md).
+Plano e verificação: [implementação](docs/superpowers/plans/2026-09-29-bonzibuddy.md).
+
+## Testes
+
+Os testes verificam ativação e movimento do Bonzi, navegação, preferência do CRT, teclado,
+toque, armazenamento bloqueado e geometria das janelas. Rode o build antes dos testes de navegador:
 
 ```sh
 npm run test:bonzi
@@ -174,10 +230,20 @@ npm run test:e2e
 Os testes unitários usam o suporte nativo a TypeScript do Node 22.18+ (o site
 mantém seu requisito de Node 20.9+). Os testes de navegador usam Chrome instalado
 e sobem um servidor de produção na porta 3178, que deve estar livre.
-Capturas de desktop e celular ficam em `test-results/` após os testes.
+Capturas de desktop e celular ficam em `test-results/` após os testes e não entram no Git.
 
-Pesquisa: [BonziBuddy](docs/research/2026-09-29-bonzibuddy-research.md).
-Plano e verificação: [implementação](docs/superpowers/plans/2026-09-29-bonzibuddy.md).
+Para gerar apenas as comparações do CRT:
+
+```sh
+npm run build
+npm run test:e2e -- tests/crt-visual.spec.ts
+```
+
+Abra `test-results/crt/visual/index.html` no navegador. O relatório compara efeito desligado,
+efeito do site e uma variante forte usada somente nos testes, com recortes ampliados de texto.
+Inclui home, menu e programação em 1440×900, 1920×1080, 390×844 e 320×568, nas densidades
+de pixels 1× e 2×, além da abertura do Windows. São capturas para inspeção, não baselines
+automáticas de regressão visual.
 
 ## Deploy
 
