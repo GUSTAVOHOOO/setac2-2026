@@ -54,7 +54,7 @@ export const PALESTRANTES: Record<string, Palestrante> = {
   },
   'gabriel-scheffler': {
     nome: 'Gabriel Lima Scheffler',
-    bio: ['Certificado AWS Cloud Practitioner'],
+    bio: ['Acadêmico de Ciência da Computação na UTFPR Santa Helena', 'Certificado AWS Cloud Practitioner'],
     palestra: 'aws',
     foto: '/palestrantes/gabriel-scheffler.jpg',
     linkedin: 'https://www.linkedin.com/in/gabriel-scheffler-781394247/',
