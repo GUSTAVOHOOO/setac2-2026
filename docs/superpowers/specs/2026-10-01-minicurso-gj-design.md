@@ -18,7 +18,7 @@ Substituir o placeholder `minicurso-2` pelo minicurso apresentado por Gustavo Ma
 
 Gustavo Mazur será descrito como cofundador, Head de Produto e desenvolvedor full stack da TraceFarm, estudante da UTFPR, com atuação em agentes de IA, automação e engenharia de software. A bio também registra os três resultados em hackathons, a presidência do Centro Acadêmico de Ciência da Computação da UTFPR-SH e a autoria do site da SETAC².
 
-Jorge Camargo será descrito como desenvolvedor full stack e estudante de Ciência da Computação na UTFPR e de Análise e Desenvolvimento de Sistemas. A bio destaca JavaScript, TypeScript, Node.js, Flutter, Python, MySQL, desenvolvimento de software e aprendizado contínuo.
+Jorge Camargo será descrito como desenvolvedor full stack, estudante de Ciência da Computação na UTFPR e técnico formado em Análise de Sistemas. A bio destaca JavaScript, TypeScript, Node.js, Flutter, Python, MySQL, desenvolvimento de software e aprendizado contínuo.
 
 ## Arquitetura e fluxo
 

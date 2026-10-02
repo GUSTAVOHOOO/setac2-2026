@@ -87,7 +87,7 @@ export const PALESTRANTES: Record<string, Palestrante> = {
     nome: 'Jorge Camargo',
     bio: [
       'Desenvolvedor full stack e estudante de Ciência da Computação na UTFPR',
-      'Também cursa Análise e Desenvolvimento de Sistemas',
+      'Técnico formado em Análise de Sistemas',
       'Experiência com JavaScript, TypeScript, Node.js, Flutter, Python e MySQL',
       'Focado em desenvolvimento de software, aprendizado contínuo e boas práticas',
     ],
