@@ -70,6 +70,31 @@ export const PALESTRANTES: Record<string, Palestrante> = {
     foto: '/palestrantes/welington-ferreira.jpg',
     linkedin: 'https://www.linkedin.com/in/wellingtondesf/',
   },
+  'gustavo-mazur': {
+    nome: 'Gustavo Mazur',
+    bio: [
+      'Cofundador, Head de Produto e desenvolvedor full stack na TraceFarm',
+      'Estudante de Ciência da Computação na UTFPR Santa Helena',
+      'Atua com agentes de IA, automação e engenharia de software',
+      'Presidente do Centro Acadêmico de Ciência da Computação da UTFPR-SH; três colocações em hackathons',
+      'Desenvolvedor do site da Setac² 2026',
+    ],
+    palestra: 'minicurso-2',
+    foto: '/palestrantes/gustavo.png',
+    linkedin: 'https://www.linkedin.com/in/gustavo-mazur-a55863325/?isSelfProfile=true',
+  },
+  'jorge-camargo': {
+    nome: 'Jorge Camargo',
+    bio: [
+      'Desenvolvedor full stack e estudante de Ciência da Computação na UTFPR',
+      'Também cursa Análise e Desenvolvimento de Sistemas',
+      'Experiência com JavaScript, TypeScript, Node.js, Flutter, Python e MySQL',
+      'Focado em desenvolvimento de software, aprendizado contínuo e boas práticas',
+    ],
+    palestra: 'minicurso-2',
+    foto: '/palestrantes/jorge.png',
+    linkedin: 'https://www.linkedin.com/in/jorge-camargo-51222a272/',
+  },
 };
 
 /** Ordem de apresentação na página /palestrantes. */
@@ -81,4 +106,6 @@ export const ORDEM_PALESTRANTES: string[] = [
   'gustavo-quieregato',
   'gabriel-scheffler',
   'welington-ferreira',
+  'gustavo-mazur',
+  'jorge-camargo',
 ];

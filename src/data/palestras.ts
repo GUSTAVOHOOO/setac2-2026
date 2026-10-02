@@ -81,12 +81,16 @@ export const PALESTRAS: Record<PalestraId, Palestra> = {
   'minicurso-2': {
     tipo: 'minicurso',
     rotulo: 'Minicurso 2',
-    titulo: 'Tema a definir',
-    aDefinir: true,
+    titulo: 'LLMs e agentes de IA na prática',
     data: '2026-10-06',
     inicio: '14:30',
-    fim: '16:00',
-    palestrantes: [],
-    resumo: [],
+    fim: '16:15',
+    palestrantes: ['gustavo-mazur', 'jorge-camargo'],
+    chamada: 'Pare, estruture e verifique antes de confiar no agente.',
+    resumo: [
+      'Neste minicurso, Gustavo Mazur e Jorge Camargo apresentam como usar modelos de linguagem e agentes de IA de forma prática, entendendo escolhas de modelo, custo, contexto, ferramentas e limites.',
+      'A aula conecta fundamentos de LLMs, modelos locais, agentes, harnesses, permissões e verificação a uma tarefa real de desenvolvimento. A turma acompanha o planejamento, a execução e a revisão de uma alteração em um projeto.',
+      'O conteúdo é voltado a estudantes iniciantes de Ciência da Computação e prioriza decisões que ajudam a produzir resultados úteis, seguros e verificáveis.',
+    ],
   },
 };
