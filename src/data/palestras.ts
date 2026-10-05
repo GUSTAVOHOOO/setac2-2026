@@ -69,6 +69,7 @@ export const PALESTRAS: Record<PalestraId, Palestra> = {
     data: '2026-10-05',
     inicio: '13:30',
     fim: '16:00',
+    local: 'Sala E11 · Laboratório Norte',
     palestrantes: ['gabriel-scheffler', 'welington-ferreira'],
     chamada:
       'Quer começar na computação em nuvem e sair com um caminho claro para a primeira certificação AWS?',
@@ -85,6 +86,7 @@ export const PALESTRAS: Record<PalestraId, Palestra> = {
     data: '2026-10-06',
     inicio: '14:30',
     fim: '16:15',
+    local: 'Sala E11 · Laboratório Norte',
     palestrantes: ['gustavo-mazur', 'jorge-camargo'],
     chamada: 'Pare, estruture e verifique antes de confiar no agente.',
     resumo: [
