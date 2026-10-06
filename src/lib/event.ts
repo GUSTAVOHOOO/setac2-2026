@@ -56,6 +56,7 @@ export interface ItemInscricao {
   /** AAAA-MM-DD */
   data: string;
   inicio: string;
+  local?: string;
   url?: string;
 }
 
@@ -73,6 +74,7 @@ export function listarInscricoes(): ItemInscricao[] {
             href: hrefPalestra(p.id),
             data: p.data,
             inicio: p.inicio,
+            local: p.local,
             url: p.inscricaoUrl,
           },
         ];
@@ -85,6 +87,7 @@ export function listarInscricoes(): ItemInscricao[] {
             icone: ICONES_TIPO[it.tipo],
             data: dia.data,
             inicio: it.inicio,
+            local: it.local,
             url: inscricaoAtividade(it.inscricao),
           },
         ];

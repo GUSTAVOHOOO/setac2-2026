@@ -19,6 +19,8 @@ export interface Atividade {
   titulo: string;
   desc: string;
   quem?: string;
+  /** Sala da atividade sem card (as palestras/minicursos têm o local no card). */
+  local?: string;
   aDefinir?: boolean;
 }
 

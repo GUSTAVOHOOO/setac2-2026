@@ -185,6 +185,7 @@ export const PROGRAMACAO: Programacao = {
           inscricao: 'corujao',
           titulo: 'Corujão de jogos',
           desc: 'Jogos digitais e de mesa; encerramento ao final',
+          local: 'Sala da Incubadora',
         },
       ],
     },

@@ -41,6 +41,7 @@ export function CorujaoDialog({ id, className }: { id?: string; className?: stri
           <b>
             Corujão de jogos
             {corujao ? ` · ${diaMesBR(corujao.data)} · a partir das ${corujao.inicio}` : null}
+            {corujao?.local ? ` · ${corujao.local}` : null}
           </b>
         </p>
         <p>Teremos jogos de:</p>

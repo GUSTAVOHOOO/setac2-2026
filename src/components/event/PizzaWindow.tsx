@@ -80,7 +80,11 @@ export function PizzaWindow({
                 <dt>Apoio:</dt> <dd>Império da Pizza</dd>
               </div>
               <div>
-                <dt>Onde:</dt> <dd>{corujao?.nome ?? 'Corujão de jogos'}</dd>
+                <dt>Onde:</dt>{' '}
+                <dd>
+                  {corujao?.nome ?? 'Corujão de jogos'}
+                  {corujao?.local ? `, ${corujao.local}` : null}
+                </dd>
               </div>
               {corujao ? (
                 <div>

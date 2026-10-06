@@ -121,6 +121,7 @@ function PainelDia({ dia, agora }: { dia: Dia; agora: Date | null }) {
                   </h4>
                   <p>{it.desc}</p>
                   {it.quem ? <p className="sch-who">{it.quem}</p> : null}
+                  {it.local ? <p className="sch-who">Local: {it.local}</p> : null}
                   {inscricao ? (
                     <a
                       href={inscricao}
