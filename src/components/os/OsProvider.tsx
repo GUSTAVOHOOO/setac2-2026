@@ -29,8 +29,8 @@ interface OsWindow {
   y: number;
   /** De onde a janela "saiu" (ícone, item do menu, botão): origem do zoom de abertura. */
   from?: Rect;
-  /** Encostar no canto de baixo assim que a altura for conhecida (primeira pintura). */
-  fundo?: boolean;
+  /** Encostar embaixo ou centralizar na altura assim que ela for conhecida (primeira pintura). */
+  alinhar?: 'fundo' | 'centro';
 }
 
 export interface OsTask {
@@ -80,19 +80,46 @@ export function OsProvider({ children }: { children: ReactNode }) {
   const zTop = useRef(0);
   const abertas = useRef(0);
 
-  const open = useCallback((href: string, from?: Rect | null, canto?: 'topo' | 'fundo') => {
-    const app = resolve(href);
-    if (!app) return;
-    const z = ++zTop.current;
-    setWins((ws) => {
-      const atual = ws.find((w) => w.key === app.key);
-      if (atual) {
-        return ws.map((w) => (w.key === app.key ? { ...w, href, z, min: false } : w));
-      }
-      hourglass();
-      if (canto) {
-        // Encostada no canto direito (em cima ou embaixo), fora da cascata.
-        const w = Math.min(app.width, window.innerWidth - 16);
+  const open = useCallback(
+    (href: string, from?: Rect | null, canto?: 'topo' | 'fundo' | 'centro') => {
+      const app = resolve(href);
+      if (!app) return;
+      const z = ++zTop.current;
+      setWins((ws) => {
+        const atual = ws.find((w) => w.key === app.key);
+        if (atual) {
+          return ws.map((w) => (w.key === app.key ? { ...w, href, z, min: false } : w));
+        }
+        hourglass();
+        if (canto) {
+          // Fora da cascata: no canto direito (em cima ou embaixo) ou no meio da tela.
+          const w = Math.min(app.width, window.innerWidth - 16);
+          const x =
+            canto === 'centro'
+              ? Math.max(8, Math.round((window.innerWidth - w) / 2))
+              : Math.max(8, window.innerWidth - w - 16);
+          return [
+            ...ws,
+            {
+              key: app.key,
+              href,
+              z,
+              min: false,
+              max: false,
+              x,
+              y: 16,
+              from: from ?? undefined,
+              alinhar: canto === 'topo' ? undefined : canto,
+            },
+          ];
+        }
+        // Cascata como no 98: a primeira à direita dos ícones do desktop, as seguintes um pouco
+        // abaixo e à direita da anterior.
+        const n = abertas.current++ % 8;
+        const icones = document
+          .querySelector('.site-desktop .w98-icongrid')
+          ?.getBoundingClientRect();
+        const x0 = icones ? Math.round(icones.right) + 24 : 120;
         return [
           ...ws,
           {
@@ -101,33 +128,15 @@ export function OsProvider({ children }: { children: ReactNode }) {
             z,
             min: false,
             max: false,
-            x: Math.max(8, window.innerWidth - w - 16),
-            y: 16,
+            x: x0 + n * 28,
+            y: 16 + n * 28,
             from: from ?? undefined,
-            fundo: canto === 'fundo',
           },
         ];
-      }
-      // Cascata como no 98: a primeira à direita dos ícones do desktop, as seguintes um pouco
-      // abaixo e à direita da anterior.
-      const n = abertas.current++ % 8;
-      const icones = document.querySelector('.site-desktop .w98-icongrid')?.getBoundingClientRect();
-      const x0 = icones ? Math.round(icones.right) + 24 : 120;
-      return [
-        ...ws,
-        {
-          key: app.key,
-          href,
-          z,
-          min: false,
-          max: false,
-          x: x0 + n * 28,
-          y: 16 + n * 28,
-          from: from ?? undefined,
-        },
-      ];
-    });
-  }, []);
+      });
+    },
+    [],
+  );
 
   const patch = useCallback((key: string, p: Partial<OsWindow>) => {
     setWins((ws) => ws.map((w) => (w.key === key ? { ...w, ...p } : w)));
@@ -187,7 +196,7 @@ export function OsProvider({ children }: { children: ReactNode }) {
   // No PC, abrir /programacao (ou outro "programa") direto vira: desktop + a janela aberta.
   // A janela só abre depois que a home renderizou (para a cascata saber onde ficam os ícones).
   // Na primeira vez que o desktop aparece, a Inscrição.txt já vem aberta no canto direito e,
-  // por cima dela, o Pizza.exe (apoio do corujão) no canto de baixo.
+  // por cima dela, o Pizza.exe (apoio do corujão) no canto de baixo e, no meio, o aviso do corujão.
   const pendente = useRef<string | null>(null);
   const inscricaoAberta = useRef(false);
   useEffect(() => {
@@ -197,6 +206,7 @@ export function OsProvider({ children }: { children: ReactNode }) {
         inscricaoAberta.current = true;
         open('/#inscricao', null, 'topo');
         open('/#pizza', null, 'fundo');
+        open('/#corujao', null, 'centro');
       }
       if (pendente.current) open(pendente.current);
       pendente.current = null;
@@ -305,13 +315,15 @@ function OsFrame({
     });
   }, [win.min, win.max, key]);
 
-  // Janela aberta "no canto de baixo": mede a altura e desce antes de pintar.
+  // Janela aberta embaixo ou no meio: mede a altura e se posiciona antes de pintar.
   useLayoutEffect(() => {
     const el = ref.current;
     const layer = el?.parentElement;
-    if (!win.fundo || !el || !layer) return;
-    onPatch(key, { y: Math.max(16, layer.clientHeight - el.offsetHeight - 16), fundo: false });
-  }, [win.fundo, key, onPatch]);
+    if (!win.alinhar || !el || !layer) return;
+    const sobra = layer.clientHeight - el.offsetHeight;
+    const y = win.alinhar === 'fundo' ? sobra - 16 : Math.round(sobra / 2);
+    onPatch(key, { y: Math.max(16, y), alinhar: undefined });
+  }, [win.alinhar, key, onPatch]);
 
   // Leva o foco do teclado para a janela quando ela abre ou volta da barra de tarefas.
   useEffect(() => {

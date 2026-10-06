@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { Window } from '@/components/win98/Window';
 import { LOGO_PIZZA, LOGO_PIZZA_CORES } from '@/data/logo-pizza';
 import { listarInscricoes } from '@/lib/event';
@@ -94,6 +95,12 @@ export function PizzaWindow({
               </div>
             </dl>
             <p>Vai ter pizza na noite de jogos. Valeu, Império!</p>
+            <p>
+              {PROMPT}{' '}
+              <Link href="/#corujao" className="site-pizza-link">
+                o que trazer pro corujão?
+              </Link>
+            </p>
             {corujao?.url ? (
               <p>
                 {PROMPT}{' '}

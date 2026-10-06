@@ -1,5 +1,6 @@
 import { Hero } from '@/components/event/Hero';
 import { BonziLauncher } from '@/components/bonzi/BonziLauncher';
+import { CorujaoDialog } from '@/components/event/CorujaoDialog';
 import { InscricaoWindow } from '@/components/event/InscricaoWindow';
 import { PizzaWindow } from '@/components/event/PizzaWindow';
 import { Marquee } from '@/components/web90s/Marquee';
@@ -49,7 +50,8 @@ export default function Home() {
             </ButtonLink>
           </nav>
 
-          {/* No PC abre sozinha como pop-up; no celular fica logo abaixo dos atalhos. */}
+          {/* No PC abrem sozinhas como pop-up; no celular ficam logo abaixo dos atalhos. */}
+          <CorujaoDialog id="corujao" className="os-hide" />
           <PizzaWindow id="pizza" inactive className="os-hide" />
 
           <Window

@@ -3,6 +3,7 @@
 import type { ReactNode } from 'react';
 import { ActivityFolder } from '@/components/event/ActivityFolder';
 import { ArquivoWindow } from '@/components/event/ArquivoWindow';
+import { CorujaoDialog } from '@/components/event/CorujaoDialog';
 import { InscricaoWindow } from '@/components/event/InscricaoWindow';
 import { LixeiraWindow } from '@/components/event/LixeiraWindow';
 import { PizzaWindow } from '@/components/event/PizzaWindow';
@@ -40,6 +41,15 @@ export function appFor(pathname: string, hash: string): OsApp | null {
       icon: '/icons/documento.svg',
       width: 620,
       render: () => <InscricaoWindow titleId="os-inscricao-titulo" />,
+    };
+  }
+  if (path === '/' && frag === 'corujao') {
+    return {
+      key: 'corujao',
+      task: 'Corujão de jogos',
+      icon: '/icons/info.svg',
+      width: 440,
+      render: () => <CorujaoDialog />,
     };
   }
   if (path === '/' && frag === 'pizza') {
