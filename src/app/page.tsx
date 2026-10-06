@@ -1,6 +1,7 @@
 import { Hero } from '@/components/event/Hero';
 import { BonziLauncher } from '@/components/bonzi/BonziLauncher';
 import { InscricaoWindow } from '@/components/event/InscricaoWindow';
+import { PizzaWindow } from '@/components/event/PizzaWindow';
 import { Marquee } from '@/components/web90s/Marquee';
 import { ButtonLink } from '@/components/win98/Button';
 import { DesktopIcon, IconGrid } from '@/components/win98/DesktopIcon';
@@ -11,8 +12,8 @@ export default function Home() {
   return (
     <div className="site-home">
       <Marquee>
-        *** INSCRIÇÕES POR ATIVIDADE *** SETAC² 2026 *** 05 E 06/10 *** UTFPR SANTA HELENA *** TRAGA
-        SEU DISQUETE ***
+        *** INSCRIÇÕES POR ATIVIDADE *** SETAC² 2026 *** 05 E 06/10 *** UTFPR SANTA HELENA *** PIZZA
+        NO CORUJÃO COM O IMPÉRIO DA PIZZA: R$ 10 POR PESSOA *** TRAGA SEU DISQUETE ***
       </Marquee>
 
       <div className="site-desktop">
@@ -27,6 +28,7 @@ export default function Home() {
             />
           ))}
           {/* Todo desktop que se preze tem uma. */}
+          <DesktopIcon href="/#pizza" icon="/icons/pizza.svg" label="Pizza.exe" />
           <DesktopIcon href="/lixeira" icon="/icons/lixeira.svg" label="Lixeira" />
           <BonziLauncher />
         </IconGrid>
@@ -46,6 +48,9 @@ export default function Home() {
               Palestrantes
             </ButtonLink>
           </nav>
+
+          {/* No PC abre sozinha como pop-up; no celular fica logo abaixo dos atalhos. */}
+          <PizzaWindow id="pizza" inactive className="os-hide" />
 
           <Window
             inactive

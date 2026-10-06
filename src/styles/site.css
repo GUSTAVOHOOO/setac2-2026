@@ -547,6 +547,75 @@ html[data-os] .os-hide {
   }
 }
 
+/*
+ * ---------- Pizza.exe: apoio do Império da Pizza ao corujão ----------
+ * O mesmo prompt da hero em tamanho de janela: a logo deles em ASCII (dourado e o vermelho
+ * do molho) com as informações ao lado. Em janela estreita a logo sobe e o texto desce.
+ */
+.site-pizza {
+  /* Vermelho do molho na logo do Império da Pizza: cor da marca deles, não do design system. */
+  --pizza-molho: #e0301e;
+}
+.site-pizza .site-cmd-screen {
+  font-size: 18px;
+}
+.site-pizza-fetch {
+  display: flex;
+  align-items: center;
+  gap: 1.5em;
+  margin: 0.4em 0 0;
+}
+.site-pizza-logo {
+  margin: 0;
+  flex: none;
+  color: var(--brand);
+  font-family: var(--font-mono);
+  /* 50 colunas × 38 linhas; o VT323 tem avanço de 0,4em (200 × 380 px). */
+  font-size: 10px;
+  line-height: 1;
+  white-space: pre;
+  user-select: none;
+}
+.site-pizza-molho {
+  color: var(--pizza-molho);
+}
+.site-pizza .site-cmd-info {
+  font-size: 18px;
+}
+.site-pizza .site-cmd-info > p {
+  margin: 0 0 0.6em;
+}
+.site-pizza-preco {
+  color: var(--hype);
+}
+.site-pizza-link {
+  color: var(--hype-cyan);
+}
+.site-pizza-link:hover,
+.site-pizza-link:focus-visible {
+  background: var(--hype-cyan);
+  color: var(--terminal);
+  outline: none;
+}
+@container (max-width: 520px) {
+  .site-pizza-fetch {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1em;
+  }
+  .site-pizza-logo {
+    align-self: center;
+    font-size: min(calc(100cqi / 20), 11px);
+  }
+}
+@media (max-width: 640px) {
+  .site-pizza .site-cmd-screen,
+  .site-pizza .site-cmd-info {
+    font-size: 17px;
+    overflow-wrap: anywhere;
+  }
+}
+
 /* Atalhos fora do prompt: botões do 98 soltos na área de trabalho. */
 .site-hero-ctas {
   display: flex;
@@ -596,7 +665,7 @@ html[data-os] .os-hide {
 
   /* Ícones numa coluna; o espaço entre eles aperta em tela baixa. */
   .site-desktop .w98-icongrid {
-    gap: clamp(2px, calc((100dvh - 540px) / 7), 24px);
+    gap: clamp(2px, calc((100dvh - 640px) / 8), 24px);
   }
 
   /* CMD em cima (encolhe), atalhos embaixo dele. */

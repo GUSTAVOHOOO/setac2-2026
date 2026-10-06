@@ -5,6 +5,7 @@ import { ActivityFolder } from '@/components/event/ActivityFolder';
 import { ArquivoWindow } from '@/components/event/ArquivoWindow';
 import { InscricaoWindow } from '@/components/event/InscricaoWindow';
 import { LixeiraWindow } from '@/components/event/LixeiraWindow';
+import { PizzaWindow } from '@/components/event/PizzaWindow';
 import { Schedule } from '@/components/event/Schedule';
 import { SpeakersWizard } from '@/components/event/SpeakersWizard';
 import { TalkCard } from '@/components/event/TalkCard';
@@ -39,6 +40,15 @@ export function appFor(pathname: string, hash: string): OsApp | null {
       icon: '/icons/documento.svg',
       width: 620,
       render: () => <InscricaoWindow titleId="os-inscricao-titulo" />,
+    };
+  }
+  if (path === '/' && frag === 'pizza') {
+    return {
+      key: 'pizza',
+      task: 'Pizza.exe',
+      icon: '/icons/pizza.svg',
+      width: 600,
+      render: () => <PizzaWindow titleId="os-pizza-titulo" />,
     };
   }
   if (path === '/programacao') {

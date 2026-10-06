@@ -29,6 +29,8 @@ interface OsWindow {
   y: number;
   /** De onde a janela "saiu" (ícone, item do menu, botão): origem do zoom de abertura. */
   from?: Rect;
+  /** Encostar no canto de baixo assim que a altura for conhecida (primeira pintura). */
+  fundo?: boolean;
 }
 
 export interface OsTask {
@@ -78,7 +80,7 @@ export function OsProvider({ children }: { children: ReactNode }) {
   const zTop = useRef(0);
   const abertas = useRef(0);
 
-  const open = useCallback((href: string, from?: Rect | null, noCanto?: boolean) => {
+  const open = useCallback((href: string, from?: Rect | null, canto?: 'topo' | 'fundo') => {
     const app = resolve(href);
     if (!app) return;
     const z = ++zTop.current;
@@ -88,8 +90,8 @@ export function OsProvider({ children }: { children: ReactNode }) {
         return ws.map((w) => (w.key === app.key ? { ...w, href, z, min: false } : w));
       }
       hourglass();
-      if (noCanto) {
-        // Encostada no canto superior direito, fora da cascata.
+      if (canto) {
+        // Encostada no canto direito (em cima ou embaixo), fora da cascata.
         const w = Math.min(app.width, window.innerWidth - 16);
         return [
           ...ws,
@@ -102,6 +104,7 @@ export function OsProvider({ children }: { children: ReactNode }) {
             x: Math.max(8, window.innerWidth - w - 16),
             y: 16,
             from: from ?? undefined,
+            fundo: canto === 'fundo',
           },
         ];
       }
@@ -183,7 +186,8 @@ export function OsProvider({ children }: { children: ReactNode }) {
 
   // No PC, abrir /programacao (ou outro "programa") direto vira: desktop + a janela aberta.
   // A janela só abre depois que a home renderizou (para a cascata saber onde ficam os ícones).
-  // Na primeira vez que o desktop aparece, a Inscrição.txt já vem aberta no canto direito.
+  // Na primeira vez que o desktop aparece, a Inscrição.txt já vem aberta no canto direito e,
+  // por cima dela, o Pizza.exe (apoio do corujão) no canto de baixo.
   const pendente = useRef<string | null>(null);
   const inscricaoAberta = useRef(false);
   useEffect(() => {
@@ -191,7 +195,8 @@ export function OsProvider({ children }: { children: ReactNode }) {
     if (pathname === '/') {
       if (!inscricaoAberta.current) {
         inscricaoAberta.current = true;
-        open('/#inscricao', null, true);
+        open('/#inscricao', null, 'topo');
+        open('/#pizza', null, 'fundo');
       }
       if (pendente.current) open(pendente.current);
       pendente.current = null;
@@ -299,6 +304,14 @@ function OsFrame({
       paintIn(el, { duration: 110, frames: 4 });
     });
   }, [win.min, win.max, key]);
+
+  // Janela aberta "no canto de baixo": mede a altura e desce antes de pintar.
+  useLayoutEffect(() => {
+    const el = ref.current;
+    const layer = el?.parentElement;
+    if (!win.fundo || !el || !layer) return;
+    onPatch(key, { y: Math.max(16, layer.clientHeight - el.offsetHeight - 16), fundo: false });
+  }, [win.fundo, key, onPatch]);
 
   // Leva o foco do teclado para a janela quando ela abre ou volta da barra de tarefas.
   useEffect(() => {
